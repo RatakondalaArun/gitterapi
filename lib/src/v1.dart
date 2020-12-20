@@ -37,8 +37,8 @@ class V1 extends Version {
     // send request
     final response = await duo.request<T>(
       '/$version/$path',
-      queryParameters: queryParameters,
-      data: postData,
+      queryParameters: _sanatized(queryParameters),
+      data: _sanatized(postData),
     );
 
     // if statusCode is not 200 throw a error
@@ -54,4 +54,16 @@ class V1 extends Version {
     // cast the response.data to type T
     return response.data;
   }
+}
+
+/// Removes all the null value keys.
+/// This only sanitize top-level values.
+Map _sanatized(Map map) {
+  final sanitizedMap = {};
+  map?.forEach((key, value) {
+    if (value != null) {
+      sanitizedMap[key] = value;
+    }
+  });
+  return sanitizedMap;
 }
