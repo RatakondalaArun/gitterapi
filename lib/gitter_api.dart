@@ -8,6 +8,7 @@ part 'src/abstract/resource.dart';
 part 'src/api_keys.dart';
 part 'src/v1.dart';
 part 'src/v1/user_resource.dart';
+part 'src/v1/rooms_resource.dart';
 part 'src/utils/auth.dart';
 part 'src/errors/gitter_api_error.dart';
 
