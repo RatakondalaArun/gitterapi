@@ -58,7 +58,7 @@ class V1 extends Version {
 
 /// Removes all the null value keys.
 /// This only sanitize top-level values.
-Map _sanatized(Map map) {
+Map<String, dynamic> _sanatized(Map<String, dynamic> map) {
   final sanitizedMap = {};
   map?.forEach((key, value) {
     if (value != null) {
