@@ -62,7 +62,7 @@ Map<String, dynamic> sanatized(Map<String, dynamic> map) => _sanatized(map);
 /// Removes all the null value keys.
 /// This only sanitize top-level values.
 Map<String, dynamic> _sanatized(Map<String, dynamic> map) {
-  final sanitizedMap = {};
+  final sanitizedMap = <String, dynamic>{};
   map?.forEach((key, value) {
     if (value != null) {
       sanitizedMap[key] = value;
