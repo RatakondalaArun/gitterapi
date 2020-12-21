@@ -7,6 +7,7 @@ environment:
 
 dependencies:
   dio: ^3.0.10
+  meta: ^1.2.4
 
 dev_dependencies:
   test: ^1.15.7
