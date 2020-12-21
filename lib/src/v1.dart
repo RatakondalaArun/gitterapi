@@ -56,6 +56,9 @@ class V1 extends Version {
   }
 }
 
+@visibleForTesting
+Map<String, dynamic> sanatized(Map<String, dynamic> map) => _sanatized(map);
+
 /// Removes all the null value keys.
 /// This only sanitize top-level values.
 Map<String, dynamic> _sanatized(Map<String, dynamic> map) {
