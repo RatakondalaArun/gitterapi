@@ -11,15 +11,15 @@ class UserResource extends Resource<V1> {
 
   /// Returns a currently signed in user.
   /// Recommended instead of [getCurrentuser()].
-  Future<Map<String, dynamic>> me() {
-    return v.jsonRequest<Map<String, dynamic>>('$path/me');
+  Future<Map> me() {
+    return v.jsonRequest<Map>('$path/me');
   }
 
   /// Get the current user.
   ///
   /// Not Recommended instead use [me(...)] method.
-  Future<Map<String, dynamic>> getCurrentUser() async {
-    return (await v.jsonRequest<List<Map<String, dynamic>>>(path))[0];
+  Future<Map> getCurrentUser() async {
+    return (await v.jsonRequest<List>(path))[0] as Map;
   }
 
   /// List of Rooms the user is part of.
@@ -29,15 +29,15 @@ class UserResource extends Resource<V1> {
 
   /// Hide the room for the user.
   Future<void> hideRoom(String userId, String roomId) {
-    return v.jsonRequest<dynamic>(
+    return v.jsonRequest<void>(
       '$path/$userId/rooms/$roomId',
       method: 'DELETE',
     );
   }
 
   /// You can retrieve unread items and mentions using the following method.
-  Future<Map<String, dynamic>> getUnreadItems(String userId, String roomId) {
-    return v.jsonRequest<Map<String, dynamic>>(
+  Future<Map> getUnreadItems(String userId, String roomId) {
+    return v.jsonRequest<Map>(
       '$path/$userId/rooms/$roomId/unreadItems',
     );
   }
@@ -48,7 +48,7 @@ class UserResource extends Resource<V1> {
     String roomId,
     List<String> chatIds,
   ) {
-    return v.jsonRequest<Map<String, dynamic>>(
+    return v.jsonRequest<void>(
       '$path/$userId/rooms/$roomId/unreadItems',
       method: 'POST',
       postData: {'chat': chatIds},
@@ -56,20 +56,20 @@ class UserResource extends Resource<V1> {
   }
 
   ///  List of the user's GitHub Organisations and their respective Room if available.
-  Future<List<Map<String, dynamic>>> getOrgs(String userId) {
-    return v.jsonRequest<List<Map<String, dynamic>>>('$path/$userId/orgs');
+  Future<List<dynamic>> getOrgs(String userId) {
+    return v.jsonRequest<List<dynamic>>('$path/$userId/orgs');
   }
 
   /// List of the user's GitHub Repositories and their respective Room if available.
   ///
   /// Note: It'll return private repositories if the current user has granted Gitter privileges to access them.
-  Future<List<Map<String, dynamic>>> getRepos(String userId) {
-    return v.jsonRequest<List<Map<String, dynamic>>>('$path/$userId/repos');
+  Future<List<dynamic>> getRepos(String userId) {
+    return v.jsonRequest<List<dynamic>>('$path/$userId/repos');
   }
 
   /// List of Gitter channels nested under the current user.
-  Future<List<Map<String, dynamic>>> getChannels(String userId) {
-    return v.jsonRequest<List<Map<String, dynamic>>>(
+  Future<List<dynamic>> getChannels(String userId) {
+    return v.jsonRequest<List<dynamic>>(
       '$path/$userId/channels',
     );
   }
