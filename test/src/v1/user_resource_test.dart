@@ -32,7 +32,7 @@ void main() {
 
     test('Should get UnreadItems as Map', () async {
       final result = await userResource.getUnreadItems(userId, roomId);
-      expect(result is Map, result);
+      expect(result is Map, true);
     });
 
     // TODO(@RatakondalaArun): markUnReadItemsAsRead
