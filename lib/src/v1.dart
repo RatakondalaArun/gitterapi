@@ -6,11 +6,14 @@ class V1 extends Version {
 
   // GitterApi _api;
   UserResource _userResource;
+  RoomsResource _roomsResource;
 
   UserResource get userResource => _userResource;
+  RoomsResource get roomResource => _roomsResource;
 
   V1(GitterApi api) : super(api) {
     _userResource = UserResource(this);
+    _roomsResource = RoomsResource(this);
   }
 
   Future<T> jsonRequest<T>(
@@ -56,10 +59,13 @@ class V1 extends Version {
   }
 }
 
+@visibleForTesting
+Map<String, dynamic> sanatized(Map<String, dynamic> map) => _sanatized(map);
+
 /// Removes all the null value keys.
 /// This only sanitize top-level values.
 Map<String, dynamic> _sanatized(Map<String, dynamic> map) {
-  final sanitizedMap = {};
+  final sanitizedMap = <String, dynamic>{};
   map?.forEach((key, value) {
     if (value != null) {
       sanitizedMap[key] = value;
