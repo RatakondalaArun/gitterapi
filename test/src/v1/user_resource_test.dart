@@ -1,17 +1,12 @@
 import 'package:test/test.dart';
 
 import 'package:gitterapi/gitter_api.dart';
-import 'package:dotenv/dotenv.dart' as env;
 
 import '../../test_utils/utils.dart' show getFromEnv;
 
 void main() {
   group('This tests UserResourse class', () {
-    env.load();
-    ApiKeys keys = ApiKeys.fromEnv();
-    if (keys.authToken == null || keys.authToken.isEmpty) {
-      keys = ApiKeys(env.env['AUTH_TOKEN']);
-    }
+    final keys = ApiKeys(getFromEnv('AUTH_TOKEN'));
     final userId = getFromEnv('USER_ID');
     final roomId = getFromEnv('ROOM_ID');
 
