@@ -6,7 +6,7 @@ import '../../test_utils/utils.dart';
 void main() {
   group('This tests Messages resource', () {
     final keys = ApiKeys(getFromEnv('AUTH_TOKEN'));
-    // final userId = getFromEnv('USER_ID');
+    final userId = getFromEnv('USER_ID');
     final roomId = getFromEnv('ROOM_ID');
     // final messageId = getFromEnv('MESSAGE_ID');
 
@@ -27,5 +27,12 @@ void main() {
 
     // TODO(@RatakondalaArun): sendMessage()
     // TODO(@RatakondalaArun): updateMessage()
+
+    test('Should get unreadItems', () async {
+      final result = await messageResource.getUnreadItems(userId, roomId);
+      expect(true, result is Map);
+    });
+
+    // TODO(@RatakondalaArun): markMessagesAsRead()
   });
 }

@@ -102,4 +102,26 @@ class MessagesResource extends Resource<V1> {
       },
     );
   }
+
+  /// You can retrieve unread items and
+  /// mentions using the following endpoint.
+  Future<Map> getUnreadItems(String userId, String roomId) {
+    return v.jsonRequest<Map>('user/$userId/rooms/$roomId/unreadItems');
+  }
+
+  /// There is an additional endpoint nested under
+  /// rooms that you can use to mark chat messages as read.
+  Future<void> markMessagesAsRead(
+    String userId,
+    String roomId, {
+    List<String> chatIds = const [],
+  }) {
+    return v.jsonRequest(
+      'user/$userId/rooms/$roomId/unreadItems',
+      method: 'POST',
+      postData: {
+        'chat': chatIds,
+      },
+    );
+  }
 }
