@@ -2,6 +2,7 @@ library gitterapi;
 
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:meta/meta.dart' show visibleForTesting;
 
 part 'src/abstract/version.dart';
 part 'src/abstract/resource.dart';
