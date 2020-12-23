@@ -8,15 +8,18 @@ class V1 extends Version {
   UserResource _userResource;
   RoomsResource _roomsResource;
   MessagesResource _messagesResource;
+  GroupsResource _groupsResource;
 
   UserResource get userResource => _userResource;
   RoomsResource get roomResource => _roomsResource;
   MessagesResource get messageResource => _messagesResource;
+  GroupsResource get groupResource => _groupsResource;
 
   V1(GitterApi api) : super(api) {
     _userResource = UserResource(this);
     _roomsResource = RoomsResource(this);
     _messagesResource = MessagesResource(this);
+    _groupsResource = GroupsResource(this);
   }
 
   Future<T> jsonRequest<T>(
