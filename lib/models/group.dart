@@ -22,6 +22,43 @@ class Group {
     this.avatarUrl,
   });
 
+  factory Group.fromMap(Map map) {
+    if (map == null) return null;
+    return Group(
+      id: map['id'],
+      name: map['name'],
+      uri: map['uri'],
+      backedBy: SecurityDescriptor.fromMap(map['backedBy']),
+      avatarUrl: map['avatarUrl'],
+    );
+  }
+
+  Group copyWith({
+    String id,
+    String name,
+    String uri,
+    SecurityDescriptor backedBy,
+    String avatarUrl,
+  }) {
+    return Group(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      uri: uri ?? this.uri,
+      backedBy: backedBy ?? this.backedBy,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'uri': uri,
+      'backedBy': backedBy?.toMap(),
+      'avatarUrl': avatarUrl,
+    };
+  }
+
   @override
   String toString() {
     return 'Group(id: $id, name: $name, uri: $uri, backedBy: $backedBy, avatarUrl: $avatarUrl)';
@@ -70,13 +107,14 @@ class SecurityDescriptor {
   String toString() => 'SecurityDescriptor(type: $type, linkPath: $linkPath)';
 }
 
-enum SecurityDescriptorType { oneToOne, ghRepo, ghUser, glGroup }
+enum SecurityDescriptorType { oneToOne, ghRepo, ghOrg, ghUser, glGroup }
 
 extension SecurityDescriptorTypeExtension on SecurityDescriptorType {
   Map<SecurityDescriptorType, String> get names {
     return {
       SecurityDescriptorType.oneToOne: 'ONE_TO_ONE',
-      SecurityDescriptorType.ghRepo: 'GH_ORG',
+      SecurityDescriptorType.ghOrg: 'GH_ORG',
+      SecurityDescriptorType.ghRepo: 'GH_REPO',
       SecurityDescriptorType.ghUser: 'GH_USER',
       SecurityDescriptorType.glGroup: 'GL_GROUP',
     };
@@ -86,18 +124,19 @@ extension SecurityDescriptorTypeExtension on SecurityDescriptorType {
     return {
       'ONE_TO_ONE': SecurityDescriptorType.oneToOne,
       'GL_GROUP': SecurityDescriptorType.glGroup,
-      'GH_ORG': SecurityDescriptorType.ghRepo,
+      'GH_ORG': SecurityDescriptorType.ghOrg,
+      'GH_REPO': SecurityDescriptorType.ghRepo,
       'GH_USER': SecurityDescriptorType.ghUser,
     };
   }
 
   String get name {
-    if (names.containsKey(this)) return null;
+    if (!names.containsKey(this)) return null;
     return names[this];
   }
 
   static SecurityDescriptorType parse(String value) {
-    if (values.containsKey(value)) return null;
+    if (!values.containsKey(value)) return null;
     return values[value];
   }
 }
