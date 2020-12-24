@@ -2,9 +2,6 @@ import 'issue.dart';
 import 'mention.dart';
 import 'user.dart';
 
-export 'issue.dart';
-export 'mention.dart';
-
 class Message {
   ///  ID of the message.
   final String id;
@@ -40,20 +37,15 @@ class Message {
   final List<Issue> issues;
 
   ///  Metadata. This is currently not used for anything.
-  final Map meta;
+  final List<dynamic> meta;
 
-  ///  Version.
-  final int v;
+  DateTime get sentAs {
+    return sentAs == null ? null : DateTime.tryParse(sent);
+  }
 
-  ///  Stands for "Gravatar version" and is used for cache busting.
-  final String gv;
-
-  ///  Boolean that indicates whether the message is a status update (a /me command)
-  final bool status;
-
-  DateTime get sentAs => DateTime.tryParse(sent);
-
-  DateTime get editedAtAs => DateTime.tryParse(editedAt);
+  DateTime get editedAtAs {
+    return editedAt == null ? null : DateTime.tryParse(editedAt);
+  }
 
   const Message({
     this.id,
@@ -68,9 +60,6 @@ class Message {
     this.mentions,
     this.issues,
     this.meta,
-    this.v,
-    this.gv,
-    this.status,
   });
 
   factory Message.fromMap(Map map) {
@@ -84,13 +73,14 @@ class Message {
       fromUser: User.fromMap(map['fromUser']),
       unread: map['unread'],
       readBy: map['readBy'],
-      urls: List.castFrom<dynamic, String>(map['urls']),
-      mentions: map['mentions']?.map((m) => Mention.fromMap(m))?.toList() ?? [],
-      issues: map['issues']?.map((m) => Issue.fromMap(m))?.toList() ?? [],
-      meta: map['meta'],
-      v: map['v'],
-      gv: map['gv'],
-      status: map['status'],
+      urls: List.castFrom<dynamic, String>(map['urls'] ?? []),
+      mentions: List.from(map['mentions'] ?? [])
+          .map<Mention>((m) => Mention.fromMap(m as Map))
+          .toList(),
+      issues: List.from(map['issues'] ?? [])
+          .map<Issue>((m) => Issue.fromMap(m))
+          .toList(),
+      meta: map['meta'] ?? [],
     );
   }
 
@@ -101,16 +91,13 @@ class Message {
       'html': html,
       'sent': sent,
       'editedAt': editedAt,
-      'fromUser': fromUser.toMap(),
+      'fromUser': fromUser?.toMap(),
       'unread': unread,
       'readBy': readBy,
       'urls': urls,
-      'mentions': mentions?.map((m) => m.toMap())?.toList() ?? [],
-      'issues': issues?.map((m) => m.toMap())?.toList() ?? [],
+      'mentions': mentions?.map((m) => m?.toMap())?.toList() ?? <Map>[],
+      'issues': issues?.map((m) => m?.toMap())?.toList() ?? <Map>[],
       'meta': meta,
-      'v': v,
-      'gv': gv,
-      'status': status,
     };
   }
 
@@ -127,9 +114,6 @@ class Message {
     List<Mention> mentions,
     List<Issue> issues,
     Map meta,
-    int v,
-    String gv,
-    bool status,
   }) {
     return Message(
       id: id ?? this.id,
@@ -144,9 +128,6 @@ class Message {
       mentions: mentions ?? this.mentions,
       issues: issues ?? this.issues,
       meta: meta ?? this.meta,
-      v: v ?? this.v,
-      gv: gv ?? this.gv,
-      status: status ?? this.status,
     );
   }
 }
