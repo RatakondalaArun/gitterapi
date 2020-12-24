@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 // {
 //       "id": "576c4d75c2f0db084a1f99ae",
 //       "name": "flutter/flutter",
@@ -130,8 +128,6 @@ class Room {
     );
   }
 
-  factory Room.fromJson(String source) => Room.fromMap(json.decode(source));
-
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -153,8 +149,6 @@ class Room {
       'v': v,
     };
   }
-
-  String toJson() => json.encode(toMap());
 
   Room copyWith({
     String id,

@@ -21,6 +21,11 @@ class Group {
     this.backedBy,
     this.avatarUrl,
   });
+
+  @override
+  String toString() {
+    return 'Group(id: $id, name: $name, uri: $uri, backedBy: $backedBy, avatarUrl: $avatarUrl)';
+  }
 }
 
 /// Security descriptor. Describes the backing object we get permissions from.
@@ -60,6 +65,9 @@ class SecurityDescriptor {
       linkPath: linkPath ?? this.linkPath,
     );
   }
+
+  @override
+  String toString() => 'SecurityDescriptor(type: $type, linkPath: $linkPath)';
 }
 
 enum SecurityDescriptorType { oneToOne, ghRepo, ghUser, glGroup }
