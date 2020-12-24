@@ -16,7 +16,7 @@ class Permissions {
   }
 
   @override
-  String toString() => 'Permissions(admin: $admin)';
+  String toString() => 'Permission(admin: $admin)';
 
   Map<String, dynamic> toMap() {
     return {
