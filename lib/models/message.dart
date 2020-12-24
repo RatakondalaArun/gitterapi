@@ -74,6 +74,7 @@ class Message {
   });
 
   factory Message.fromMap(Map map) {
+    if (map == null) return null;
     return Message(
       id: map['id'],
       text: map['text'],
