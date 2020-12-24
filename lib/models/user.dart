@@ -99,7 +99,7 @@ class User {
       avatarUrl: map['avatarUrl'],
       avatarUrlSmall: map['avatarUrlSmall'],
       avatarUrlMedium: map['avatarUrlMedium'],
-      providers: map['providers'] ?? [],
+      providers: List<String>.from(map['providers'] ?? []),
       v: map['v'],
       gv: map['gv'],
     );
