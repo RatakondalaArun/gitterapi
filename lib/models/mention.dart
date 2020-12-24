@@ -8,6 +8,7 @@ class Mention {
   });
 
   factory Mention.fromMap(Map map) {
+    if (map == null) return null;
     return Mention(
       userId: map['userId'],
       screenName: map['screenName'],
