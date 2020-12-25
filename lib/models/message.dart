@@ -28,7 +28,7 @@ class Message {
   final int readBy;
 
   ///  List of URLs present in the message.
-  final List<String> urls;
+  final List<Map> urls;
 
   ///  List of @Mentions in the message.
   final List<Mention> mentions;
@@ -73,7 +73,7 @@ class Message {
       fromUser: User.fromMap(map['fromUser']),
       unread: map['unread'],
       readBy: map['readBy'],
-      urls: List.castFrom<dynamic, String>(map['urls'] ?? []),
+      urls: map['urls']?.map((m) => m as Map)?.toList() ?? [],
       mentions: List.from(map['mentions'] ?? [])
           .map<Mention>((m) => Mention.fromMap(m as Map))
           .toList(),
