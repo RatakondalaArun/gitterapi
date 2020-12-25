@@ -1,10 +1,6 @@
 part of gitterapi;
 
 class V1 extends Version {
-  @override
-  String get version => 'v1';
-
-  // GitterApi _api;
   UserResource _userResource;
   RoomsResource _roomsResource;
   MessagesResource _messagesResource;
@@ -17,7 +13,7 @@ class V1 extends Version {
   GroupsResource get groupResource => _groupsResource;
   StreamApi get streamApi => _streamApi;
 
-  V1(GitterApi api) : super(api) {
+  V1(GitterApi api) : super(api, 'v1') {
     _userResource = UserResource(this);
     _roomsResource = RoomsResource(this);
     _messagesResource = MessagesResource(this);
@@ -25,7 +21,7 @@ class V1 extends Version {
     _streamApi = StreamApi(this);
   }
 
-  Future<T> jsonRequest<T>(
+  Future<T> _jsonRequest<T>(
     String path, {
     String method = 'GET',
     Map<String, dynamic> queryParameters = const <String, dynamic>{},
@@ -48,7 +44,7 @@ class V1 extends Version {
 
     // send request
     final response = await duo.request<T>(
-      '/$version/$path',
+      '/$_version/$path',
       queryParameters: _sanatized(queryParameters),
       data: _sanatized(postData),
     );
@@ -88,7 +84,7 @@ class V1 extends Version {
     Response<ResponseBody> response;
 
     try {
-      response = await duo.request<ResponseBody>('/$version/$path');
+      response = await duo.request<ResponseBody>('/$_version/$path');
     } on DioError catch (e, st) {
       print('$e, $st');
       rethrow;
