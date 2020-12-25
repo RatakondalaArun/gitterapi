@@ -73,7 +73,7 @@ class Message {
       fromUser: User.fromMap(map['fromUser']),
       unread: map['unread'],
       readBy: map['readBy'],
-      urls: map['urls']?.map((m) => m as Map)?.toList() ?? [],
+      urls: List.castFrom<dynamic, Map>(map['urls'] ?? []),
       mentions: List.from(map['mentions'] ?? [])
           .map<Mention>((m) => Mention.fromMap(m as Map))
           .toList(),
