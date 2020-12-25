@@ -2,7 +2,7 @@ part of gitterapi;
 
 class RoomsResource extends Resource<V1> {
   @override
-  String get path => 'rooms';
+  String get _path => 'rooms';
 
   RoomsResource(V1 v) : super(v);
 
@@ -50,8 +50,8 @@ class RoomsResource extends Resource<V1> {
   /// ]
   /// ```
   Future<List<dynamic>> rooms({String query}) {
-    return v.jsonRequest<List<dynamic>>(
-      path,
+    return _v._jsonRequest<List<dynamic>>(
+      _path,
       // this make sures that query values is not null.
       queryParameters: query == null ? {} : {'q': query},
     );
@@ -77,14 +77,15 @@ class RoomsResource extends Resource<V1> {
   /// ```
   ///
   Future<Map> getRoomIdFrom(String uri) {
-    return v.jsonRequest<Map>('$path', method: 'POST', postData: {'uri': uri});
+    return _v
+        ._jsonRequest<Map>('$_path', method: 'POST', postData: {'uri': uri});
   }
 
   /// Join the room via ID.
   /// `userId` and `roomId` must not be null
   Future<void> joinRoom(String userId, String roomId) {
-    return v.jsonRequest(
-      'user/$userId/$path',
+    return _v._jsonRequest(
+      'user/$userId/$_path',
       method: 'POST',
       postData: {'id': roomId},
     );
@@ -93,8 +94,8 @@ class RoomsResource extends Resource<V1> {
   /// Bans the give user form the room
   /// `roomId` and `username` must not be null.
   Future<void> banUserFromRoom(String roomId, String username) {
-    return v.jsonRequest(
-      '$path/$roomId/bans',
+    return _v._jsonRequest(
+      '$_path/$roomId/bans',
       method: 'POST',
       postData: {'username': username},
     );
@@ -114,8 +115,8 @@ class RoomsResource extends Resource<V1> {
     bool noindex,
     List<String> tags,
   }) {
-    return v.jsonRequest(
-      '$path/$roomId',
+    return _v._jsonRequest(
+      '$_path/$roomId',
       method: 'PUT',
       postData: {
         'topic': topic,
@@ -127,7 +128,7 @@ class RoomsResource extends Resource<V1> {
 
   ///Delete a room.
   Future<void> deleteRoom(String roomId) {
-    return v.jsonRequest('$path/$roomId', method: 'DELETE');
+    return _v._jsonRequest('$_path/$roomId', method: 'DELETE');
   }
 
   /// List of Users currently in the room.
@@ -169,8 +170,8 @@ class RoomsResource extends Resource<V1> {
     int skip,
     int limit = 30,
   }) {
-    return v.jsonRequest(
-      '$path/$roomId/users',
+    return _v._jsonRequest(
+      '$_path/$roomId/users',
       queryParameters: {
         'q': query,
         'skip': skip,

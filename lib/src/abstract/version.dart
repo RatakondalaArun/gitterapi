@@ -10,9 +10,9 @@ abstract class Version {
   /// Must not be null.
   /// ```
   /// @override
-  /// String get version => 'v1';
+  /// String get _version => 'v1';
   /// ```
-  String get version;
+  String get _version;
 
   /// Returns a instance of [GitterApi]
   GitterApi get api => _api;

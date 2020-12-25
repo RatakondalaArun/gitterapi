@@ -9,15 +9,15 @@ class StreamApi extends Resource<V1> {
   StreamApi(V1 v) : super(v);
 
   @override
-  String get path => 'rooms';
+  String get _path => 'rooms';
 
   /// This returns chat message send by users in room.
   Future<Stream<StreamEvent>> chatMessages(String roomId) async {
-    return v._streamRequest('$path/$roomId/chatMessages');
+    return _v._streamRequest('$_path/$roomId/chatMessages');
   }
 
   /// This returns room events.
   Future<Stream<StreamEvent>> roomEvents(String roomId) async {
-    return v._streamRequest('$path/$roomId/events');
+    return _v._streamRequest('$_path/$roomId/events');
   }
 }

@@ -4,7 +4,7 @@ class MessagesResource extends Resource<V1> {
   MessagesResource(V1 v) : super(v);
 
   @override
-  String get path => 'chatMessages';
+  String get _path => 'chatMessages';
 
   /// List of messages in a room.
   /// Returns [List<Map<String,dynamic>>].
@@ -26,8 +26,8 @@ class MessagesResource extends Resource<V1> {
     int limit = 50,
     String query,
   }) {
-    return v.jsonRequest<List>(
-      'rooms/$roomId/$path',
+    return _v._jsonRequest<List>(
+      'rooms/$roomId/$_path',
       queryParameters: {
         'skip': skip,
         'beforeId': beforeId,
@@ -41,7 +41,7 @@ class MessagesResource extends Resource<V1> {
 
   /// There is also a way to retrieve a single message using its id.
   Future<Map> getSingleMessage(String roomId, String messageId) {
-    return v.jsonRequest<Map>('rooms/$roomId/$path/$messageId');
+    return _v._jsonRequest<Map>('rooms/$roomId/$_path/$messageId');
   }
 
   /// Send a message to a room.
@@ -50,8 +50,8 @@ class MessagesResource extends Resource<V1> {
   /// - `status`: Boolean, set to true to indicate that the message is a status update (what /me uses)
   ///
   Future<void> sendMessage(String roomId, String messageText, {bool status}) {
-    return v.jsonRequest<void>(
-      'rooms/$roomId/$path',
+    return _v._jsonRequest<void>(
+      'rooms/$roomId/$_path',
       method: 'POST',
       postData: {
         'text': messageText,
@@ -94,8 +94,8 @@ class MessagesResource extends Resource<V1> {
   /// }
   /// ```
   Future<Map> updateMessage(String roomId, String messageId, String text) {
-    return v.jsonRequest<Map>(
-      'rooms/$roomId/$path/$messageId',
+    return _v._jsonRequest<Map>(
+      'rooms/$roomId/$_path/$messageId',
       method: 'PUT',
       postData: {
         'text': text,
@@ -106,7 +106,7 @@ class MessagesResource extends Resource<V1> {
   /// You can retrieve unread items and
   /// mentions using the following endpoint.
   Future<Map> getUnreadItems(String userId, String roomId) {
-    return v.jsonRequest<Map>('user/$userId/rooms/$roomId/unreadItems');
+    return _v._jsonRequest<Map>('user/$userId/rooms/$roomId/unreadItems');
   }
 
   /// There is an additional endpoint nested under
@@ -116,7 +116,7 @@ class MessagesResource extends Resource<V1> {
     String roomId, {
     List<String> chatIds = const [],
   }) {
-    return v.jsonRequest(
+    return _v._jsonRequest(
       'user/$userId/rooms/$roomId/unreadItems',
       method: 'POST',
       postData: {
