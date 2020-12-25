@@ -2,13 +2,8 @@ part of gitterapi;
 
 /// Abstract of any resource
 abstract class Resource<V extends Version> {
-  /// root path of this resource
-  ///
-  /// ```
-  /// @override
-  /// String get _path = 'rooms';
-  /// ```
-  String get _path;
+  /// Root path of this resource
+  final String _path;
 
   /// Returns a Instance of An Subclass of
   /// type [Version].
@@ -18,5 +13,5 @@ abstract class Resource<V extends Version> {
   final V _v;
 
   /// `v` must not be null.
-  Resource(this._v);
+  Resource(this._v, this._path);
 }

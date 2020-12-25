@@ -4,7 +4,7 @@ class RoomsResource extends Resource<V1> {
   @override
   String get _path => 'rooms';
 
-  RoomsResource(V1 v) : super(v);
+  RoomsResource(V1 v) : super(v, 'rooms');
 
   /// List rooms the current user is in.
   ///

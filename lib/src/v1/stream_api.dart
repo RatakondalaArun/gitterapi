@@ -6,10 +6,7 @@ part of gitterapi;
 /// tell clients and NAT firewalls that the connection
 /// is still alive during low message volume periods.
 class StreamApi extends Resource<V1> {
-  StreamApi(V1 v) : super(v);
-
-  @override
-  String get _path => 'rooms';
+  StreamApi(V1 v) : super(v, 'rooms');
 
   /// This returns chat message send by users in room.
   Future<Stream<StreamEvent>> chatMessages(String roomId) async {

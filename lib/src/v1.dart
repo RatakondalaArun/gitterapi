@@ -1,10 +1,6 @@
 part of gitterapi;
 
 class V1 extends Version {
-  @override
-  String get _version => 'v1';
-
-  // GitterApi _api;
   UserResource _userResource;
   RoomsResource _roomsResource;
   MessagesResource _messagesResource;
@@ -17,7 +13,7 @@ class V1 extends Version {
   GroupsResource get groupResource => _groupsResource;
   StreamApi get streamApi => _streamApi;
 
-  V1(GitterApi api) : super(api) {
+  V1(GitterApi api) : super(api, 'v1') {
     _userResource = UserResource(this);
     _roomsResource = RoomsResource(this);
     _messagesResource = MessagesResource(this);

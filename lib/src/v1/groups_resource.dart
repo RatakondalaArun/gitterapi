@@ -1,10 +1,7 @@
 part of gitterapi;
 
 class GroupsResource extends Resource<V1> {
-  GroupsResource(V1 v) : super(v);
-
-  @override
-  String get _path => 'groups';
+  GroupsResource(V1 v) : super(v, 'groups');
 
   /// List groups the current user is in.
   Future<List> getGropus() {

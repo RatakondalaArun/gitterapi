@@ -1,10 +1,7 @@
 part of gitterapi;
 
 class MessagesResource extends Resource<V1> {
-  MessagesResource(V1 v) : super(v);
-
-  @override
-  String get _path => 'chatMessages';
+  MessagesResource(V1 v) : super(v, 'chatMessages');
 
   /// List of messages in a room.
   /// Returns [List<Map<String,dynamic>>].

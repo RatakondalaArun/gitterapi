@@ -4,10 +4,7 @@ part of gitterapi;
 ///
 /// [Check out the gitter documentation](https://developer.gitter.im/docs/user-resource)
 class UserResource extends Resource<V1> {
-  @override
-  String get _path => 'user';
-
-  UserResource(V1 v1) : super(v1);
+  UserResource(V1 v1) : super(v1, 'user');
 
   /// Returns a currently signed in user.
   /// Recommended instead of [getCurrentuser()].
