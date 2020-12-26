@@ -40,7 +40,7 @@ class Message {
   final List<dynamic> meta;
 
   DateTime get sentAs {
-    return sentAs == null ? null : DateTime.tryParse(sent);
+    return sent == null ? null : DateTime.tryParse(sent);
   }
 
   DateTime get editedAtAs {
