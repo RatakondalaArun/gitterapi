@@ -95,7 +95,7 @@ class Room {
 
   /// Returns [DateTime] instance of `lastAccessTime`.
   DateTime get lastAccessTimeAsDateTime {
-    return DateTime.tryParse(lastAccessTime) ?? DateTime.now();
+    return DateTime.tryParse(lastAccessTime ?? DateTime.now().toUtc());
   }
 
   const Room({
