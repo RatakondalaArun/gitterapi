@@ -58,12 +58,13 @@ class V1 extends Version {
         statusCode: response.statusCode,
         statusMessage: response.statusMessage,
       );
-    } catch (e) {
+    } catch (e, st) {
       // Convert exceptions to Result object
       return Result<T>.fromError(
         statusCode: response.statusCode,
         statusMessage: response.statusMessage,
         error: e,
+        stackTrace: st,
         data: response.data,
       );
     }
@@ -91,11 +92,11 @@ class V1 extends Version {
 
     try {
       response = await duo.request<ResponseBody>('/$_version/$path');
-    } on DioError catch (e, st) {
-      print('$e, $st');
-      rethrow;
-    } catch (e, st) {
-      print('$e, $st');
+    } on DioError catch (e) {
+      // catch all DioErrors.
+      throw GitterApiException.fromDio(e);
+    } catch (_) {
+      // rethrow remaining exceptions.
       rethrow;
     }
 
