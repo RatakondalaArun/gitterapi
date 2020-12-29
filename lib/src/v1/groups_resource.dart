@@ -4,17 +4,17 @@ class GroupsResource extends Resource<V1> {
   GroupsResource(V1 v) : super(v, 'groups');
 
   /// List groups the current user is in.
-  Future<List> getGropus() {
+  Future<Result<List>> getGropus() {
     return _v._jsonRequest<List>('$_path');
   }
 
   /// List of rooms nested under the specified group.
-  Future<List> getRooms(String groupId) {
+  Future<Result<List>> getRooms(String groupId) {
     return _v._jsonRequest<List>('$_path/$groupId/rooms');
   }
 
   /// Create room nested under the specified group.
-  Future<void> createRoom(
+  Future<Result<Map>> createRoom(
     String groupId, {
     String name,
     String topic,
@@ -25,7 +25,7 @@ class GroupsResource extends Resource<V1> {
   }) {
     // TODO(@RatakondalaArun): Not sure how this works
     // checkout this https://developer.gitter.im/docs/groups-resource
-    return _v._jsonRequest<void>(
+    return _v._jsonRequest<Map>(
       '$_path/$groupId/rooms',
       method: 'POST',
       postData: {

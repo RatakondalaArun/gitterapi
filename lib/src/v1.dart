@@ -21,7 +21,7 @@ class V1 extends Version {
     _streamApi = StreamApi(this);
   }
 
-  Future<T> _jsonRequest<T>(
+  Future<Result<T>> _jsonRequest<T>(
     String path, {
     String method = 'GET',
     Map<String, dynamic> queryParameters = const <String, dynamic>{},
@@ -42,25 +42,32 @@ class V1 extends Version {
     // instance of duo with BaseOptions
     final duo = new Dio(options);
 
-    // send request
-    final response = await duo.request<T>(
-      '/$_version/$path',
-      queryParameters: _sanatized(queryParameters),
-      data: _sanatized(postData),
-    );
+    Response<T> response;
+    try {
+      // send request
+      response = await duo.request<T>(
+        '/$_version/$path',
+        queryParameters: _sanatized(queryParameters),
+        data: _sanatized(postData),
+      );
 
-    // if statusCode is not 200 throw a error
-    if (response.statusCode != 200) {
-      throw GitterApiException(
-        'statusCode != 200 statusMessage: ${response.statusMessage} statusCode:${response.statusCode}',
-        response: response.data != null
-            ? {'data': response.data, 'statusCode': response.statusCode}
-            : null,
+      // Converts response to Result object.
+      return Result<T>.success(
+        headers: response.headers,
+        data: response.data,
+        statusCode: response.statusCode,
+        statusMessage: response.statusMessage,
+      );
+    } catch (e, st) {
+      // Convert exceptions to Result object
+      return Result<T>.fromError(
+        statusCode: response.statusCode,
+        statusMessage: response.statusMessage,
+        error: e,
+        stackTrace: st,
+        data: response.data,
       );
     }
-
-    // cast the response.data to type T
-    return response.data;
   }
 
   Future<Stream<StreamEvent>> _streamRequest(
@@ -85,11 +92,11 @@ class V1 extends Version {
 
     try {
       response = await duo.request<ResponseBody>('/$_version/$path');
-    } on DioError catch (e, st) {
-      print('$e, $st');
-      rethrow;
-    } catch (e, st) {
-      print('$e, $st');
+    } on DioError catch (e) {
+      // catch all DioErrors.
+      throw GitterApiException.fromDio(e);
+    } catch (_) {
+      // rethrow remaining exceptions.
       rethrow;
     }
 

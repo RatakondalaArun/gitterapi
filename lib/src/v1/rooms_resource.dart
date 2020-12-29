@@ -49,7 +49,7 @@ class RoomsResource extends Resource<V1> {
   ///  },
   /// ]
   /// ```
-  Future<List<dynamic>> rooms({String query}) {
+  Future<Result<List<dynamic>>> rooms({String query}) {
     return _v._jsonRequest<List<dynamic>>(
       _path,
       // this make sures that query values is not null.
@@ -76,14 +76,14 @@ class RoomsResource extends Resource<V1> {
   /// }
   /// ```
   ///
-  Future<Map> getRoomIdFrom(String uri) {
+  Future<Result<Map>> getRoomIdFrom(String uri) {
     return _v
         ._jsonRequest<Map>('$_path', method: 'POST', postData: {'uri': uri});
   }
 
   /// Join the room via ID.
   /// `userId` and `roomId` must not be null
-  Future<void> joinRoom(String userId, String roomId) {
+  Future<Result<void>> joinRoom(String userId, String roomId) {
     return _v._jsonRequest(
       'user/$userId/$_path',
       method: 'POST',
@@ -93,7 +93,7 @@ class RoomsResource extends Resource<V1> {
 
   /// Bans the give user form the room
   /// `roomId` and `username` must not be null.
-  Future<void> banUserFromRoom(String roomId, String username) {
+  Future<Result<void>> banUserFromRoom(String roomId, String username) {
     return _v._jsonRequest(
       '$_path/$roomId/bans',
       method: 'POST',
@@ -109,7 +109,7 @@ class RoomsResource extends Resource<V1> {
   /// - `noindex`: Whether the room is indexed by search engines.
   /// - `tags`: Tags that define the room.
   ///
-  Future<void> updateRoom(
+  Future<Result<void>> updateRoom(
     String roomId, {
     String topic,
     bool noindex,
@@ -127,8 +127,8 @@ class RoomsResource extends Resource<V1> {
   }
 
   ///Delete a room.
-  Future<void> deleteRoom(String roomId) {
-    return _v._jsonRequest('$_path/$roomId', method: 'DELETE');
+  Future<Result<Map>> deleteRoom(String roomId) {
+    return _v._jsonRequest<Map>('$_path/$roomId', method: 'DELETE');
   }
 
   /// List of Users currently in the room.
@@ -164,13 +164,13 @@ class RoomsResource extends Resource<V1> {
   ///   }
   /// ]
   /// ```
-  Future<List<dynamic>> getUsers(
+  Future<Result<List<dynamic>>> getUsers(
     String roomId, {
     String query,
     int skip,
     int limit = 30,
   }) {
-    return _v._jsonRequest(
+    return _v._jsonRequest<List<dynamic>>(
       '$_path/$roomId/users',
       queryParameters: {
         'q': query,

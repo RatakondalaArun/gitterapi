@@ -14,15 +14,15 @@ void main() {
     final messageResource = api.v1.messageResource;
     test('Should get 10 messages from room as List', () async {
       final result = await messageResource.getMessages(roomId, limit: 10);
-      expect(true, result is List);
-      expect(10, result.length);
+      expect(result.data is List, true);
+      expect(result.data.length, 10);
     });
 
     test('Should get a single message by id as Map', () async {
       final messages = await messageResource.getMessages(roomId, limit: 1);
-      final messageId = messages[0]['id'];
+      final messageId = messages.data[0]['id'];
       final result = await messageResource.getSingleMessage(roomId, messageId);
-      expect(true, result is Map);
+      expect(result.data is Map, true);
     });
 
     // TODO(@RatakondalaArun): sendMessage()
@@ -30,7 +30,7 @@ void main() {
 
     test('Should get unreadItems', () async {
       final result = await messageResource.getUnreadItems(userId, roomId);
-      expect(true, result is Map);
+      expect(result.data is Map, true);
     });
 
     // TODO(@RatakondalaArun): markMessagesAsRead()
