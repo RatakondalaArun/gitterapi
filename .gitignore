@@ -2,3 +2,4 @@
 .packages
 .env
 doc
+.markdownlint.yaml

@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  build_cli_annotations:
+    dependency: transitive
+    description:
+      name: build_cli_annotations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   charcode:
     dependency: transitive
     description:
@@ -99,6 +106,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.38.0"
+  dhttpd:
+    dependency: "direct dev"
+    description:
+      name: dhttpd
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.2"
   dio:
     dependency: "direct main"
     description:
