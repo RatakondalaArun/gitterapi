@@ -14,7 +14,7 @@ class MessagesResource extends Resource<V1> {
   /// - `aroundId`: Get messages around aroundId including this message.
   /// - `limit`: Maximum number of messages to return (constrained to 100 or less).
   /// - `q`: Search query.
-  Future<List<dynamic>> getMessages(
+  Future<Result<List<dynamic>>> getMessages(
     String roomId, {
     int skip,
     String beforeId,
@@ -37,7 +37,7 @@ class MessagesResource extends Resource<V1> {
   }
 
   /// There is also a way to retrieve a single message using its id.
-  Future<Map> getSingleMessage(String roomId, String messageId) {
+  Future<Result<Map>> getSingleMessage(String roomId, String messageId) {
     return _v._jsonRequest<Map>('rooms/$roomId/$_path/$messageId');
   }
 
@@ -46,7 +46,8 @@ class MessagesResource extends Resource<V1> {
   /// - `text`: Required Body of the message.
   /// - `status`: Boolean, set to true to indicate that the message is a status update (what /me uses)
   ///
-  Future<void> sendMessage(String roomId, String messageText, {bool status}) {
+  Future<Result<void>> sendMessage(String roomId, String messageText,
+      {bool status}) {
     return _v._jsonRequest<void>(
       'rooms/$roomId/$_path',
       method: 'POST',
@@ -90,7 +91,8 @@ class MessagesResource extends Resource<V1> {
   ///   "v": 2
   /// }
   /// ```
-  Future<Map> updateMessage(String roomId, String messageId, String text) {
+  Future<Result<Map>> updateMessage(
+      String roomId, String messageId, String text) {
     return _v._jsonRequest<Map>(
       'rooms/$roomId/$_path/$messageId',
       method: 'PUT',
@@ -102,13 +104,13 @@ class MessagesResource extends Resource<V1> {
 
   /// You can retrieve unread items and
   /// mentions using the following endpoint.
-  Future<Map> getUnreadItems(String userId, String roomId) {
+  Future<Result<Map>> getUnreadItems(String userId, String roomId) {
     return _v._jsonRequest<Map>('user/$userId/rooms/$roomId/unreadItems');
   }
 
   /// There is an additional endpoint nested under
   /// rooms that you can use to mark chat messages as read.
-  Future<void> markMessagesAsRead(
+  Future<Result<void>> markMessagesAsRead(
     String userId,
     String roomId, {
     List<String> chatIds = const [],
