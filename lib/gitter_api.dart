@@ -19,15 +19,36 @@ part 'src/v1/rooms_resource.dart';
 part 'src/v1/stream_api.dart';
 part 'src/v1/user_resource.dart';
 
+/// Core instance of Gitter API.
+///
+/// ### Parameters
+///
+/// - `keys`: This takes instance of [ApiKeys] which you can use to serve
+/// your access token.
+///
+/// Checkout the [gitter docs](https://developer.gitter.im/docs/welcome)
 class GitterApi {
+  /// API Host.
   final host = 'api.gitter.im';
 
+  /// Contains accesstoken.
   final ApiKeys keys;
 
   V1 _v1;
 
+  /// Version one of this API.
+  /// This contains all the resources belongs
+  /// to version 1 of gitter api.
   V1 get v1 => _v1;
 
+  /// Creates a instance of [this]
+  ///
+  /// ## Parameters
+  ///
+  /// - `keys`: This takes instance of [ApiKeys] which you can use to serve
+  /// your access token.
+  ///
+  /// Checkout the [gitter docs](https://developer.gitter.im/docs/welcome)
   GitterApi(this.keys) {
     _v1 = V1(this);
   }

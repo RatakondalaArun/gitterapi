@@ -1,6 +1,8 @@
 part of gitterapi;
 
+/// Contains methods for [Group-Resources](https://developer.gitter.im/docs/groups-resource).
 class GroupsResource extends Resource<V1> {
+  /// Creates a instance of [this].
   GroupsResource(V1 v) : super(v, 'groups');
 
   /// List groups the current user is in.
@@ -9,11 +11,27 @@ class GroupsResource extends Resource<V1> {
   }
 
   /// List of rooms nested under the specified group.
+  ///
+  /// ### Parameters:
+  ///
+  /// - `groupId`: Id of the group.
+  ///
   Future<Result<List>> getRooms(String groupId) {
     return _v._jsonRequest<List>('$_path/$groupId/rooms');
   }
 
   /// Create room nested under the specified group.
+  ///
+  /// ### Parameters:
+  ///
+  /// - `groupId`: Id of the group.
+  /// - `name`: Room name.W
+  /// - `topic`: Room topic/description.
+  /// - `security`: Describes the backing object we get permissions from. (defaults to 'PUBLIC').
+  /// - `type`: null|'ONE_TO_ONE'|'GH_REPO'|'GH_ORG'|'GH_USER'.
+  /// - `linkPath`: Represents how we find the backing object given the type.
+  /// - `source`: Tracking info for stats.
+  ///
   Future<Result<Map>> createRoom(
     String groupId, {
     String name,
