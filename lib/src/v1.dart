@@ -1,5 +1,6 @@
 part of gitterapi;
 
+/// Class of version 1 of gitter API
 class V1 extends Version {
   UserResource _userResource;
   RoomsResource _roomsResource;
@@ -7,12 +8,23 @@ class V1 extends Version {
   GroupsResource _groupsResource;
   StreamApi _streamApi;
 
+  /// Serves methods to access [user-resources](https://developer.gitter.im/docs/user-resource).
   UserResource get userResource => _userResource;
+
+  /// Serves methods to access [rooms-resources](https://developer.gitter.im/docs/rooms-resource).
   RoomsResource get roomResource => _roomsResource;
+
+  /// Serves methods to access [messages-resources](https://developer.gitter.im/docs/messages-resource).
   MessagesResource get messageResource => _messagesResource;
+
+  /// Serves methods to access [groups-resources](https://developer.gitter.im/docs/groups-resource).
   GroupsResource get groupResource => _groupsResource;
+
+  /// The streaming API allows real-time access to rooms. [streaming-api](https://developer.gitter.im/docs/streaming-api).
   StreamApi get streamApi => _streamApi;
 
+  /// Creates a instance of [this].
+  ///
   V1(GitterApi api) : super(api, 'v1') {
     _userResource = UserResource(this);
     _roomsResource = RoomsResource(this);
@@ -21,6 +33,7 @@ class V1 extends Version {
     _streamApi = StreamApi(this);
   }
 
+  /// Sends a json request to server and returns [Result<T>].
   Future<Result<T>> _jsonRequest<T>(
     String path, {
     String method = 'GET',
@@ -70,6 +83,7 @@ class V1 extends Version {
     }
   }
 
+  /// Sends a request and returns [Stream<StreamEvent>].
   Future<Stream<StreamEvent>> _streamRequest(
     String path, {
     String method = 'GET',

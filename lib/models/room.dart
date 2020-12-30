@@ -1,31 +1,6 @@
 import 'permission.dart';
 
-// {
-//       "id": "576c4d75c2f0db084a1f99ae",
-//       "name": "flutter/flutter",
-//       "topic": "Flutter makes it easy and fast to build beautiful apps for mobile and beyond.\n",
-//       "avatarUrl": "https://avatars-01.gitter.im/group/iv/4/576c4d75c2f0db084a1f99ad",
-//       "uri": "flutter/flutter",
-//       "oneToOne": false,
-//       "userCount": 12301,
-//       "unreadItems": 17,
-//       "mentions": 0,
-//       "lastAccessTime": "2020-12-16T17:14:05.771Z",
-//       "lurk": false,
-//       "url": "/flutter/flutter",
-//       "githubType": "REPO",
-//       "security": "PUBLIC",
-//       "noindex": false,
-//       "tags": [],
-//       "permissions": {
-//           "admin": false
-//       },
-//       "roomMember": true,
-//       "groupId": "576c4d75c2f0db084a1f99ad",
-//       "public": true,
-//       "v": 2
-//   },
-
+/// Represents a room.
 class Room {
   ///Room ID.
   final String id;
@@ -85,6 +60,7 @@ class Room {
   /// Wheather be indexed by search engines.
   final bool noindex;
 
+  /// Permissions user have in this room.
   final Permissions permissions;
 
   /// Room version.
@@ -100,6 +76,7 @@ class Room {
     );
   }
 
+  /// Creates a instance of [Room].
   const Room({
     this.id,
     this.name,
@@ -232,15 +209,29 @@ class Room {
   }
 }
 
+/// Type of room.
 enum RoomType {
+  /// This room is belonged to organization.
   org,
+
+  /// This room is belonged to Repository.
   repo,
+
+  /// This room is a one to one chat( Direct message ).
   oneToOne,
+
+  /// This is a Organization channel
   orgChannel,
+
+  /// This is a Repository channel
   repoChannel,
+
+  /// This is a User channel
   userChannel,
 }
 
+/// Extension on [RoomType]. Used to parse [RoomType] to [String]
+/// and back.
 extension RoomTypeExtension on RoomType {
   /// Returns [Map<RoomType,String>] with respect to there string.
   static const names = {

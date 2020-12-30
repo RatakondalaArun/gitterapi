@@ -1,5 +1,0 @@
-- Improve Message class
-    - [] Add "threadMessageCount"
-    - [] Add isParent getter
-    - [] Add isChild getter
-    - [] Add isEdited getter

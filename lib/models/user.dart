@@ -25,10 +25,13 @@ class User {
   /// Auth Provider
   final List<String> providers;
 
+  /// Version
   final int v;
 
+  /// Gavavatar version
   final String gv;
 
+  /// Creates a instance of [User]
   const User({
     this.id,
     this.username,

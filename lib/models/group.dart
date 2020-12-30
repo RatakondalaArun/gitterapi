@@ -1,3 +1,4 @@
+/// Represents a group.
 class Group {
   /// Group ID.
   final String id;
@@ -14,6 +15,7 @@ class Group {
   /// Base avatar URL (add s parameter to size)
   final String avatarUrl;
 
+  /// Creates a instance of [Group].
   const Group({
     this.id,
     this.name,
@@ -70,9 +72,10 @@ class SecurityDescriptor {
   /// [null|'ONE_TO_ONE'|'GH_REPO'|'GH_ORG'|'GH_USER']
   final SecurityDescriptorType type;
 
-  /// Represents how we find the backing object given the type
+  /// Represents how we find the backing object given the type.
   final String linkPath;
 
+  /// Creates a instace of [SecurityDescriptor].
   const SecurityDescriptor({
     this.type,
     this.linkPath,
@@ -107,8 +110,16 @@ class SecurityDescriptor {
   String toString() => 'SecurityDescriptor(type: $type, linkPath: $linkPath)';
 }
 
-enum SecurityDescriptorType { oneToOne, ghRepo, ghOrg, ghUser, glGroup }
+/// Security descriptorType. Describes the backing object we get permissions from.
+enum SecurityDescriptorType {
+  oneToOne,
+  ghRepo,
+  ghOrg,
+  ghUser,
+  glGroup,
+}
 
+/// This can be used to convert [SecurityDescriptorType] to [String] and back.
 extension SecurityDescriptorTypeExtension on SecurityDescriptorType {
   Map<SecurityDescriptorType, String> get names {
     return {

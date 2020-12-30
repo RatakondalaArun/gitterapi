@@ -1,54 +1,19 @@
 part of gitterapi;
 
+/// Creates methods for [Rooms-resource](https://developer.gitter.im/docs/rooms-resource).
 class RoomsResource extends Resource<V1> {
   @override
   String get _path => 'rooms';
 
+  /// Creates a instance of [this].
   RoomsResource(V1 v) : super(v, 'rooms');
 
   /// List rooms the current user is in.
   ///
-  /// Returns [List<Map<String,dynamic>>].
+  /// ### Parameters:
   ///
-  /// ### Response
-  /// ```
-  /// [
-  ///  {
-  ///    "id": "53307860c3599d1de448e19d",
-  ///    "name": "Andrew Newdigate",
-  ///    "topic": "",
-  ///    "oneToOne": true,
-  ///    "user": {
-  ///      "id": "53307831c3599d1de448e19a",
-  ///      "username": "suprememoocow",
-  ///      "displayName": "Andrew Newdigate",
-  ///      "url": "/suprememoocow",
-  ///      "avatarUrlSmall": "https://avatars.githubusercontent.com/u/594566?",
-  ///      "avatarUrlMedium": "https://avatars.githubusercontent.com/u/594566?"
-  ///     },
-  ///    "unreadItems": 0,
-  ///    "mentions": 0,
-  ///    "lurk": false,
-  ///    "url": "/suprememoocow",
-  ///    "githubType": "ONETOONE"
-  ///  },
-  ///  {
-  ///    "id": "5330777dc3599d1de448e194",
-  ///    "name": "gitterHQ",
-  ///    "topic": "Gitter",
-  ///    "uri": "gitterHQ",
-  ///    "oneToOne": false,
-  ///    "userCount": 2,
-  ///    "unreadItems": 0,
-  ///    "mentions": 0,
-  ///    "lastAccessTime": "2014-03-24T18:22:28.105Z",
-  ///    "lurk": false,
-  ///    "url": "/gitterHQ",
-  ///    "githubType": "ORG",
-  ///    "v": 1
-  ///  },
-  /// ]
-  /// ```
+  /// - `query`: Query to search for rooms.
+  ///
   Future<Result<List<dynamic>>> rooms({String query}) {
     return _v._jsonRequest<List<dynamic>>(
       _path,
@@ -60,29 +25,33 @@ class RoomsResource extends Resource<V1> {
   // TODO(@RatakondalaArun): Create a room
 
   /// Fetches room id from uri.
-  /// `uri` must not be null.
-  /// ### Example:
+  ///
+  /// ### Parameters
+  ///
+  /// - `uri`: Room Uri must not be null.
+  ///
+  /// ### Example
   /// ```
   /// String uri = 'gitterhq/sandbox';
   /// // remaining  code ......
-  ///final room = getRoomIdFrom(uri);
-  /// ```
-  /// ### Result:
-  /// ```
-  /// {
-  ///   "id": "52b42a52ed5ab0b3bf051b93",
-  ///   "name": "gitterHQ/sandbox",
-  ///   //...
-  /// }
+  /// final room = getRoomIdFrom(uri);
   /// ```
   ///
   Future<Result<Map>> getRoomIdFrom(String uri) {
-    return _v
-        ._jsonRequest<Map>('$_path', method: 'POST', postData: {'uri': uri});
+    return _v._jsonRequest<Map>(
+      '$_path',
+      method: 'POST',
+      postData: {'uri': uri},
+    );
   }
 
   /// Join the room via ID.
-  /// `userId` and `roomId` must not be null
+  ///
+  /// ### Parameters
+  ///
+  /// - `userId`: Id of the user.
+  /// - `roomId`: Id of the room.
+  ///
   Future<Result<void>> joinRoom(String userId, String roomId) {
     return _v._jsonRequest(
       'user/$userId/$_path',
@@ -91,8 +60,13 @@ class RoomsResource extends Resource<V1> {
     );
   }
 
-  /// Bans the give user form the room
-  /// `roomId` and `username` must not be null.
+  /// Bans the give user form the room.
+  /// user must be a group admin to perform this action.
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  /// - `username`: username. must not be null.
   Future<Result<void>> banUserFromRoom(String roomId, String username) {
     return _v._jsonRequest(
       '$_path/$roomId/bans',
@@ -102,6 +76,7 @@ class RoomsResource extends Resource<V1> {
   }
 
   /// Update room details.
+  /// user must be group admin to perform this action.
   ///
   /// ### Parameters
   ///
@@ -126,7 +101,13 @@ class RoomsResource extends Resource<V1> {
     );
   }
 
-  ///Delete a room.
+  /// Delete a room.
+  /// user must be group admin to perform this action.
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  ///
   Future<Result<Map>> deleteRoom(String roomId) {
     return _v._jsonRequest<Map>('$_path/$roomId', method: 'DELETE');
   }
@@ -141,29 +122,6 @@ class RoomsResource extends Resource<V1> {
   /// - `skip`: Skip n users.
   /// - `limit`: maximum number of users to return (default 30).
   ///
-  /// ### Response
-  ///
-  /// ```
-  /// [
-  ///   {
-  ///     "id": "53307734c3599d1de448e192",
-  ///     "username": "malditogeek",
-  ///     "displayName": "Mauro Pompilio",
-  ///     "url": "/malditogeek",
-  ///     "avatarUrlSmall": "https://avatars.githubusercontent.com/u/14751?",
-  ///     "avatarUrlMedium": "https://avatars.githubusercontent.com/u/14751?",
-  ///     "role": "admin"
-  ///   },
-  ///   {
-  ///     "id": "53307831c3599d1de448e19a",
-  ///     "username": "suprememoocow",
-  ///     "displayName": "Andrew Newdigate",
-  ///     "url": "/suprememoocow",
-  ///     "avatarUrlSmall": "https://avatars.githubusercontent.com/u/594566?",
-  ///     "avatarUrlMedium": "https://avatars.githubusercontent.com/u/594566?"
-  ///   }
-  /// ]
-  /// ```
   Future<Result<List<dynamic>>> getUsers(
     String roomId, {
     String query,

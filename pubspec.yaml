@@ -12,3 +12,5 @@ dependencies:
 dev_dependencies:
   test: ^1.15.7
   dotenv: ^2.0.0
+  dartdoc: ^0.38.0
+  dhttpd: ^3.0.2
