@@ -1,6 +1,9 @@
+/// Represents a issue.
 class Issue {
+  /// Issues number that was mentioned.
   final String number;
 
+  /// Creates a instance of [Issue].
   const Issue({
     this.number,
   });

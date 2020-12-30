@@ -1,3 +1,6 @@
+/// This library provides a easy way to intract with [Gitter API](https://developer.gitter.im/docs/welcome).
+///
+/// This library also provides models to convert responses.
 library gitterapi;
 
 import 'dart:convert';

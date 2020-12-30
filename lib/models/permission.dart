@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+/// This class contains user permissions.
 class Permissions {
+  /// Returns true if this person is admin.
   final bool admin;
 
-  Permissions({
+  /// Creates a instance of [Permissions].
+  const Permissions({
     this.admin,
   });
 

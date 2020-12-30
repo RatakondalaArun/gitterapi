@@ -2,6 +2,7 @@ import 'issue.dart';
 import 'mention.dart';
 import 'user.dart';
 
+/// Represents a Message.
 class Message {
   ///  ID of the message.
   final String id;
@@ -18,7 +19,7 @@ class Message {
   ///  ISO formatted date of the message if edited.
   final String editedAt;
 
-  ///  (User)[user-resource] that sent the message.
+  ///  (User) that sent the message.
   final User fromUser;
 
   ///  Boolean that indicates if the current user has read the message.
@@ -39,14 +40,17 @@ class Message {
   ///  Metadata. This is currently not used for anything.
   final List<dynamic> meta;
 
+  /// Converts [sent] to [DateTime].
   DateTime get sentAs {
     return sent == null ? null : DateTime.tryParse(sent);
   }
 
+  /// Converts [editedAt] to [DateTime].
   DateTime get editedAtAs {
     return editedAt == null ? null : DateTime.tryParse(editedAt);
   }
 
+  /// Creates a instance of [Message].
   const Message({
     this.id,
     this.text,
