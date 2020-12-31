@@ -5,3 +5,4 @@ export 'models/message.dart';
 export 'models/permission.dart';
 export 'models/room.dart';
 export 'models/user.dart';
+export 'models/github_profile.dart';

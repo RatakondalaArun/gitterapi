@@ -13,6 +13,7 @@ void main() {
     "oneToOne": false,
     "userCount": 1958,
     "unreadItems": 99,
+    "favourite": 1,
     "mentions": 0,
     "lastAccessTime": "2020-12-23T14:14:03.220Z",
     "lurk": false,

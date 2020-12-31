@@ -125,4 +125,128 @@ class MessagesResource extends Resource<V1> {
       },
     );
   }
+
+  /// Returns list of user read this message.
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  /// - `messageId`: Id of the message.
+  ///
+  Future<Result<List>> messageReadBy(String roomId, String messageId) {
+    return _v._jsonRequest<List>(
+      'rooms/$roomId/chatMessage/$messageId/readBy',
+    );
+  }
+
+  /// Marks all message messages in a room as read.
+  ///
+  /// ### Parameters
+  ///
+  /// - `userId`: Id of the user.
+  /// - `roomId`: Id of the room.
+  ///
+  Future<Result<Map>> markAllMessagesAsRead(String userId, String roomId) {
+    return _v._jsonRequest(
+      'user/$userId/rooms/$roomId/unreadItems/all',
+      method: 'DELETE',
+    );
+  }
+
+  /// Delete a message.
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  /// - `messageId`: Id of the message.
+  ///
+  Future<Result<Map>> deleteMessage(String roomId, String messageId) {
+    return _v._jsonRequest(
+      'rooms/$roomId/chatMessages/$messageId',
+      method: 'DELETE',
+    );
+  }
+
+  /// Creates a thread for a message
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  /// - `parentId`: Id of the parent message.
+  /// Thread will be created under this message.
+  /// - `text`: Message text.
+  ///
+  Future<Result<Map>> createThreadMessage(
+    String roomId,
+    String parentId,
+    String text, {
+    bool status = true,
+  }) {
+    return _v._jsonRequest<Map>(
+      'rooms/$roomId/chatMessages/',
+      method: 'POST',
+      postData: {
+        'parentId': parentId,
+        'text': text,
+        'status': status,
+      },
+    );
+  }
+
+  /// Updates already created message
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  /// - `messageId`: Id of the message.
+  /// - `text`: Message text.
+  ///
+  Future<Result<Map>> updateThreadMessage(
+    String roomId,
+    String messageId,
+    String text, {
+    bool status = true,
+  }) {
+    return _v._jsonRequest<Map>(
+      'rooms/$roomId/chatMessages/$messageId',
+      method: 'PUT',
+      postData: {
+        'text': text,
+        'status': status,
+      },
+    );
+  }
+
+  /// Returns a list of Messages that belong to a thread.
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  /// - `messageId`: Id of the message.
+  /// - `limit`: Maximum number of messages to return.
+  ///
+  Future<Result<List>> getThreadMessages(
+    String roomId,
+    String messageId, {
+    int limit,
+  }) {
+    return _v._jsonRequest<List>(
+      'rooms/$roomId/chatMessages/$messageId/thread',
+      queryParameters: {'limit': limit},
+    );
+  }
+
+  /// Deletes a message under thread
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  /// - `messageId`:Id of the message that you want to delete.
+  ///
+  Future<Result<Map>> deleteThreadMessage(String roomId, String messageId) {
+    return _v._jsonRequest<Map>(
+      '/rooms/$roomId/chatMessages/$messageId',
+      method: 'DELETE',
+    );
+  }
 }

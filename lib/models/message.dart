@@ -16,6 +16,14 @@ class Message {
   ///  ISO formatted date of the message.
   final String sent;
 
+  /// Count of number of thread messages this message has.
+  /// This will be null if this is child(thread).
+  final int threadMessageCount;
+
+  /// Id of the parent message. If this is a thread message
+  /// else null.
+  final String parentId;
+
   ///  ISO formatted date of the message if edited.
   final String editedAt;
 
@@ -50,12 +58,20 @@ class Message {
     return editedAt == null ? null : DateTime.tryParse(editedAt);
   }
 
+  /// Returns true if this is a parent.
+  bool get isParent => parentId != null;
+
+  /// Returns true if this is a child thread.
+  bool get isChild => parentId == null;
+
   /// Creates a instance of [Message].
   const Message({
     this.id,
     this.text,
     this.html,
     this.sent,
+    this.threadMessageCount,
+    this.parentId,
     this.editedAt,
     this.fromUser,
     this.unread,
@@ -73,6 +89,8 @@ class Message {
       text: map['text'],
       html: map['html'],
       sent: map['sent'],
+      threadMessageCount: map['threadMessageCount'],
+      parentId: map['parentId'],
       editedAt: map['editedAt'],
       fromUser: User.fromMap(map['fromUser']),
       unread: map['unread'],
@@ -94,6 +112,8 @@ class Message {
       'text': text,
       'html': html,
       'sent': sent,
+      'parentId': parentId,
+      'threadMessageCount': threadMessageCount,
       'editedAt': editedAt,
       'fromUser': fromUser?.toMap(),
       'unread': unread,
@@ -110,20 +130,24 @@ class Message {
     String text,
     String html,
     String sent,
+    int threadMessageCount,
+    String parentId,
     String editedAt,
     User fromUser,
     bool unread,
     int readBy,
-    List<String> urls,
+    List<Map> urls,
     List<Mention> mentions,
     List<Issue> issues,
-    Map meta,
+    List<dynamic> meta,
   }) {
     return Message(
       id: id ?? this.id,
       text: text ?? this.text,
       html: html ?? this.html,
       sent: sent ?? this.sent,
+      threadMessageCount: threadMessageCount ?? this.threadMessageCount,
+      parentId: parentId ?? this.parentId,
       editedAt: editedAt ?? this.editedAt,
       fromUser: fromUser ?? this.fromUser,
       unread: unread ?? this.unread,
@@ -133,5 +157,10 @@ class Message {
       issues: issues ?? this.issues,
       meta: meta ?? this.meta,
     );
+  }
+
+  @override
+  String toString() {
+    return 'Message(\n ${toMap()} \n)';
   }
 }
