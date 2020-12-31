@@ -6,3 +6,4 @@ export 'models/permission.dart';
 export 'models/room.dart';
 export 'models/user.dart';
 export 'models/github_profile.dart';
+export 'models/repo_event.dart';
