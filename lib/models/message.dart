@@ -59,10 +59,10 @@ class Message {
   }
 
   /// Returns true if this is a parent.
-  bool get isParent => parentId != null;
+  bool get isParent => parentId == null;
 
   /// Returns true if this is a child thread.
-  bool get isChild => parentId == null;
+  bool get isChild => parentId != null;
 
   /// Creates a instance of [Message].
   const Message({
