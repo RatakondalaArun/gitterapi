@@ -1,5 +1,5 @@
 /// Github profile.
-class GithubProfile {
+class UserProfile {
   /// Id of the user.
   final String id;
 
@@ -59,8 +59,8 @@ class GithubProfile {
   /// Returns true if the user is from github.
   bool get isUserFromGithub => github != null;
 
-  /// Create a instance of [GithubProfile].
-  const GithubProfile({
+  /// Create a instance of [UserProfile].
+  const UserProfile({
     this.id,
     this.username,
     this.displayName,
@@ -92,10 +92,10 @@ class GithubProfile {
     };
   }
 
-  factory GithubProfile.fromMap(Map<String, dynamic> map) {
+  factory UserProfile.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return GithubProfile(
+    return UserProfile(
       id: map['id'],
       username: map['username'],
       displayName: map['displayName'],
@@ -116,7 +116,7 @@ class GithubProfile {
     return 'GithubProfile(id: $id, username: $username, displayName: $displayName, hasGitterLogin: $hasGitterLogin, company: $company, location: $location, email: $email, website: $website, profile: $profile, github: $github, gv: $gv)';
   }
 
-  GithubProfile copyWith({
+  UserProfile copyWith({
     String id,
     String username,
     String displayName,
@@ -130,7 +130,7 @@ class GithubProfile {
     String gravatarImageUrl,
     String gv,
   }) {
-    return GithubProfile(
+    return UserProfile(
       id: id ?? this.id,
       username: username ?? this.username,
       displayName: displayName ?? this.displayName,
@@ -164,7 +164,7 @@ class GithubStats {
 
     return GithubStats(
       followers: map['followers'],
-      publicRepos: map['publicRepos'],
+      publicRepos: map['public_repos'],
       following: map['following'],
     );
   }
@@ -184,7 +184,7 @@ class GithubStats {
   Map<String, dynamic> toMap() {
     return {
       'followers': followers,
-      'publicRepos': publicRepos,
+      'public_repos': publicRepos,
       'following': following,
     };
   }
