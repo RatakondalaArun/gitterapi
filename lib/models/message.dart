@@ -59,7 +59,7 @@ class Message {
   }
 
   /// Returns true if this is a parent.
-  bool get isParent => parentId == null;
+  bool get isParent => threadMessageCount != null || threadMessageCount == 0;
 
   /// Returns true if this is a child thread.
   bool get isChild => parentId != null;
