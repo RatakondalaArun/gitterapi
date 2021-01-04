@@ -67,12 +67,39 @@ class RoomsResource extends Resource<V1> {
   ///
   /// - `roomId`: Id of the room.
   /// - `username`: username. must not be null.
-  Future<Result<void>> banUserFromRoom(String roomId, String username) {
+  Future<Result<void>> banUser(String roomId, String username) {
     return _v._jsonRequest(
       '$_path/$roomId/bans',
       method: 'POST',
       postData: {'username': username},
     );
+  }
+
+  /// UnBan the give user form the room.
+  /// user who is performing this must be a
+  /// group admin to perform this action.
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  /// - `username`: username. must not be null.
+  ///
+  Future<Result<void>> unbanUser(String roomId, String username) {
+    return _v._jsonRequest(
+      '$_path/$roomId/bans',
+      method: 'DELETE',
+      postData: {'username': username},
+    );
+  }
+
+  /// Returns List of banned users in the room.
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the Room.
+  ///
+  Future<Result<List>> getBannedList(String roomId) {
+    return _v._jsonRequest<List>('$_path/$roomId');
   }
 
   /// Update room details.
@@ -136,5 +163,41 @@ class RoomsResource extends Resource<V1> {
         'limit': limit,
       },
     );
+  }
+
+  /// Repository Events.
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  /// - `skip`: Skip n users.
+  /// - `limit`: maximum number of users to return (default 30).
+  ///
+  Future<Result<List>> getRoomEvents(String roomId, {int skip, int limit}) {
+    return _v._jsonRequest<List>(
+      '$_path/$roomId/events',
+      queryParameters: {'skip': skip, 'limit': limit},
+    );
+  }
+
+  /// Returns a list of issues from the group repo.
+  ///
+  /// ### Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  ///
+  Future<Result<List>> getIssues(String roomId) {
+    return _v._jsonRequest<List>('rooms/$roomId/issues');
+  }
+
+  /// Returns Issue details.
+  ///
+  /// ## Parameters
+  ///
+  /// - `roomId`: Id of the room.
+  /// - `issueNumber`: Issue number.
+  ///
+  Future<Result<Map>> getIssueDetails(String roomId, String issueNumber) {
+    return _v._jsonRequest<Map>('rooms/$roomId/issues/$issueNumber');
   }
 }

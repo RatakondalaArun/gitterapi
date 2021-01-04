@@ -10,6 +10,16 @@ class UserResource extends Resource<V1> {
     return _v._jsonRequest<Map>('$_path/me');
   }
 
+  /// Returns Profile by username.
+  /// This can return github or gitlab pofiles.
+  /// ### Parameters
+  ///
+  /// - `username`: Gitter username.
+  ///
+  Future<Result<Map>> getProfileByUsername(String username) {
+    return _v._jsonRequest<Map>('users/$username');
+  }
+
   /// List of Rooms the user is part of.
   ///
   /// ### Parameters
@@ -100,6 +110,36 @@ class UserResource extends Resource<V1> {
   Future<Result<List<dynamic>>> getChannels(String userId) {
     return _v._jsonRequest<List<dynamic>>(
       '$_path/$userId/channels',
+    );
+  }
+
+  /// Add Room to user favourite.
+  ///
+  /// ### Parameters
+  ///
+  /// - `userId`: Id of the user.
+  /// - `roomId`: Id of the room.
+  ///
+  Future<Result<void>> addFav(String userId, String roomId) {
+    return _v._jsonRequest<void>(
+      '/user/$userId/rooms/$roomId',
+      method: 'PUT',
+      postData: {"favourite": true},
+    );
+  }
+
+  /// Remove Room from user favourite.
+  ///
+  /// ### Parameters
+  ///
+  /// - `userId`: Id of the user.
+  /// - `roomId`: Id of the room.
+  ///
+  Future<Result<void>> removeFav(String userId, String roomId) {
+    return _v._jsonRequest<void>(
+      '/user/$userId/rooms/$roomId',
+      method: 'PUT',
+      postData: {"favourite": false},
     );
   }
 }

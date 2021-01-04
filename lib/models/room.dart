@@ -32,6 +32,9 @@ class Room {
   /// Last time the current user accessed the room in ISO format.
   final String lastAccessTime;
 
+  /// This wil be 1 if user marked this as favourite.
+  final int favourite;
+
   /// Indicates if the current user has disabled notifications.
   final bool lurk;
 
@@ -88,17 +91,18 @@ class Room {
     this.unreadItems,
     this.mentions,
     this.lastAccessTime,
+    this.favourite,
     this.lurk,
     this.url,
     this.githubType,
     this.tags,
-    this.v,
     this.noindex,
     this.security,
     this.roomMember,
     this.groupId,
     this.public,
     this.permissions,
+    this.v,
   });
 
   factory Room.fromMap(Map map) {
@@ -115,6 +119,7 @@ class Room {
       unreadItems: map['unreadItems'],
       mentions: map['mentions'],
       lastAccessTime: map['lastAccessTime'],
+      favourite: map['favourite'],
       lurk: map['lurk'],
       url: map['url'],
       githubType: map['githubType'],
@@ -124,8 +129,8 @@ class Room {
       groupId: map['groupId'],
       public: map['public'],
       noindex: map['noindex'],
-      v: map['v'],
       permissions: Permissions.fromMap(map['permissions']),
+      v: map['v'],
     );
   }
 
@@ -141,6 +146,7 @@ class Room {
       'unreadItems': unreadItems,
       'mentions': mentions,
       'lastAccessTime': lastAccessTime,
+      'favourite': favourite,
       'lurk': lurk,
       'url': url,
       'githubType': githubType,
@@ -166,6 +172,7 @@ class Room {
     int unreadItems,
     int mentions,
     String lastAccessTime,
+    int favourite,
     bool lurk,
     String url,
     String githubType,
@@ -189,6 +196,7 @@ class Room {
       unreadItems: unreadItems ?? this.unreadItems,
       mentions: mentions ?? this.mentions,
       lastAccessTime: lastAccessTime ?? this.lastAccessTime,
+      favourite: favourite ?? this.favourite,
       lurk: lurk ?? this.lurk,
       url: url ?? this.url,
       githubType: githubType ?? this.githubType,
@@ -205,7 +213,7 @@ class Room {
 
   @override
   String toString() {
-    return 'Room(id: $id, name: $name, topic: $topic, avatarUrl: $avatarUrl, uri: $uri, oneToOne: $oneToOne, userCount: $userCount, unreadItems: $unreadItems, mentions: $mentions, lastAccessTime: $lastAccessTime, lurk: $lurk, url: $url, githubType: $githubType, security: $security, tags: $tags, roomMember: $roomMember, groupId: $groupId, public: $public, noindex: $noindex, permissions: $permissions, v: $v)';
+    return 'Room(\n${toMap()}\n)';
   }
 }
 
