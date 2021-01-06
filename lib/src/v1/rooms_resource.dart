@@ -10,15 +10,52 @@ class RoomsResource extends Resource<V1> {
 
   /// List rooms the current user is in.
   ///
-  /// ### Parameters:
-  ///
-  /// - `query`: Query to search for rooms.
-  ///
-  Future<Result<List<dynamic>>> rooms({String query}) {
+  Future<Result<List<dynamic>>> rooms() {
     return _v._jsonRequest<List<dynamic>>(
       _path,
       // this make sures that query values is not null.
-      queryParameters: query == null ? {} : {'q': query},
+    );
+  }
+
+  /// Searches room
+  /// Query must not be null else this will throw [ArgumentError].
+  ///
+  /// ### Result
+  ///
+  /// ```
+  /// {
+  ///     "results": [
+  ///         {
+  ///             "id": "5787e94cc2f0db084a230583",
+  ///             "name": "dart-lang/sdk",
+  ///             "topic": "The Dart SDK, including the VM, dart2js, core libraries, and more.",
+  ///             "avatarUrl": "https://avatars-03.gitter.im/group/iv/4/57542ca9c43b8c6019775551",
+  ///             "uri": "dart-lang/sdk",
+  ///             "oneToOne": false,
+  ///             "userCount": 1967,
+  ///             "unreadItems": 100,
+  ///             "mentions": 0,
+  ///             "lastAccessTime": "2021-01-04T17:00:06.584Z",
+  ///             "lurk": false,
+  ///             "url": "/dart-lang/sdk",
+  ///             "githubType": "REPO",
+  ///             "security": "PUBLIC",
+  ///             "noindex": false,
+  ///             "roomMember": true,
+  ///             "groupId": "57542ca9c43b8c6019775551",
+  ///             "public": true,
+  ///             "v": 2
+  ///         }
+  ///     ]
+  /// }
+  /// ```
+  ///
+  Future<Result<Map>> search(String query, {int limit}) {
+    ArgumentError.checkNotNull<String>(query, 'query');
+    return _v._jsonRequest<Map>(
+      _path,
+      // this make sures that query values is not null.
+      queryParameters: {'q': query, 'limit': limit},
     );
   }
 
