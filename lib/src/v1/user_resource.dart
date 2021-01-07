@@ -11,6 +11,15 @@ class UserResource extends Resource<V1> {
   }
 
   /// Search of users
+  ///
+  /// ### Parameters
+  ///
+  /// - `query`: This field must not be null or empty else
+  /// it will throw [ArgumentError].
+  /// - `limit`: maximum number of users to return (default 10).
+  /// - `type`: No idea what this field does🙂.
+  /// If you know you can document this field or raise a
+  /// [issue](https://github.com/RatakondalaArun/gitterapi/issues/new).
   Future<Result<Map>> search(
     String query, {
     int limit,
