@@ -52,6 +52,13 @@ class RoomsResource extends Resource<V1> {
   ///
   Future<Result<Map>> search(String query, {int limit}) {
     ArgumentError.checkNotNull<String>(query, 'query');
+    if (query.trim().isEmpty) {
+      throw ArgumentError.value(
+        query,
+        'query',
+        'query should not contains empty value',
+      );
+    }
     return _v._jsonRequest<Map>(
       _path,
       // this make sures that query values is not null.
@@ -182,7 +189,7 @@ class RoomsResource extends Resource<V1> {
   ///
   /// All the parameters are optional:
   ///
-  /// - `q`: Search query
+  /// - `query`: Search query
   /// - `skip`: Skip n users.
   /// - `limit`: maximum number of users to return (default 30).
   ///

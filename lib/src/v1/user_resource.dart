@@ -10,6 +10,35 @@ class UserResource extends Resource<V1> {
     return _v._jsonRequest<Map>('$_path/me');
   }
 
+  /// Search of users
+  ///
+  /// ### Parameters
+  ///
+  /// - `query`: This field must not be null or empty else
+  /// it will throw [ArgumentError].
+  /// - `limit`: maximum number of users to return (default 10).
+  /// - `type`: No idea what this field does🙂.
+  /// If you know you can document this field or raise a
+  /// [issue](https://github.com/RatakondalaArun/gitterapi/issues/new).
+  Future<Result<Map>> search(
+    String query, {
+    int limit,
+    String type = 'gitter',
+  }) {
+    ArgumentError.checkNotNull<String>(query, 'query');
+    if (query.trim().isEmpty) {
+      throw ArgumentError.value(
+        query,
+        'query',
+        'query should not contains empty value',
+      );
+    }
+    return _v._jsonRequest<Map>(
+      '$_path',
+      queryParameters: {'q': query, 'type': type, 'limit': limit},
+    );
+  }
+
   /// Returns Profile by username.
   /// This can return github or gitlab pofiles.
   /// ### Parameters
