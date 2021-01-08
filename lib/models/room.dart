@@ -123,7 +123,7 @@ class Room {
       lurk: map['lurk'],
       url: map['url'],
       githubType: map['githubType'],
-      tags: List.castFrom<dynamic, String>(map['tags']),
+      tags: List.castFrom<dynamic, String>(map['tags'] ?? []),
       security: map['security'],
       roomMember: map['roomMember'],
       groupId: map['groupId'],
