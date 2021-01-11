@@ -7,3 +7,4 @@ export 'models/room.dart';
 export 'models/user.dart';
 export 'models/user_profile.dart';
 export 'models/repo_event.dart';
+export 'models/repo.dart';
