@@ -18,14 +18,14 @@ void main() {
       "gravatarImageUrl": null
     };
 
-    final glProfile = {
-      "id": "5e95ae5dd73408ce4fe06253",
-      "username": "tmiquel_loft_gitlab",
-      "displayName": "Thibaut Miquel",
-      "has_gitter_login": true,
-      "gravatarImageUrl":
-          "https://secure.gravatar.com/avatar/2aef431ce9f855e2b6f695a05054c9ae?s=80&d=identicon"
-    };
+    // final glProfile = {
+    //   "id": "5e95ae5dd73408ce4fe06253",
+    //   "username": "tmiquel_loft_gitlab",
+    //   "displayName": "Thibaut Miquel",
+    //   "has_gitter_login": true,
+    //   "gravatarImageUrl":
+    //       "https://secure.gravatar.com/avatar/2aef431ce9f855e2b6f695a05054c9ae?s=80&d=identicon"
+    // };
     test('Should convert Map to ', () async {
       final convertedGH = UserProfile.fromMap(ghProfile);
       // final convertedGL = UserProfile.fromMap(glProfile);

@@ -47,8 +47,8 @@ class V1 extends Version {
       responseType: ResponseType.json,
       contentType: 'application/json',
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer ${_api.keys.authToken}',
-        HttpHeaders.acceptHeader: 'application/json'
+        'authorization': 'Bearer ${_api.keys.authToken}',
+        'accept': 'application/json'
       },
     );
 
@@ -95,8 +95,8 @@ class V1 extends Version {
       responseType: ResponseType.stream,
       contentType: 'application/json',
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer ${_api.keys.authToken}',
-        HttpHeaders.acceptHeader: 'application/json'
+        'authorization': 'Bearer ${_api.keys.authToken}',
+        'accept': 'application/json'
       },
     );
 
