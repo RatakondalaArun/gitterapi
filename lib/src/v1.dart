@@ -43,11 +43,11 @@ class V1 extends Version {
     // initilize BaseOptions
     final options = BaseOptions(
       method: method,
-      baseUrl: 'https://${_api.host}',
+      baseUrl: 'https://${_api._host}',
       responseType: ResponseType.json,
       contentType: 'application/json',
       headers: {
-        'authorization': 'Bearer ${_api.keys.authToken}',
+        'authorization': 'Bearer ${_api._keys.authToken}',
         'accept': 'application/json'
       },
     );
@@ -95,7 +95,7 @@ class V1 extends Version {
       responseType: ResponseType.stream,
       contentType: 'application/json',
       headers: {
-        'authorization': 'Bearer ${_api.keys.authToken}',
+        'authorization': 'Bearer ${_api._keys.authToken}',
         'accept': 'application/json'
       },
     );
