@@ -31,10 +31,10 @@ part 'src/v1/user_resource.dart';
 /// Checkout the [gitter docs](https://developer.gitter.im/docs/welcome)
 class GitterApi {
   /// API Host.
-  final host = 'api.gitter.im';
+  final _host = 'api.gitter.im';
 
   /// Contains accesstoken.
-  final ApiKeys keys;
+  final ApiKeys _keys;
 
   V1 _v1;
 
@@ -51,7 +51,7 @@ class GitterApi {
   /// your access token.
   ///
   /// Checkout the [gitter docs](https://developer.gitter.im/docs/welcome)
-  GitterApi(this.keys) {
+  GitterApi(this._keys) {
     _v1 = V1(this);
   }
 }
