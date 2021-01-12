@@ -1,0 +1,33 @@
+name: CI-Tests
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build:
+    env:
+      AUTH_TOKEN: ${{ secerts.AUTH_TOKEN}}
+      USER_ID: ${{ secerts.USER_ID}}
+      ROOM_ID: ${{ secerts.ROOM_ID}}
+      CHAT_ROOM_ID: ${{ secerts.CHAT_ROOM_ID}}
+      MESSAGE_ID: ${{ secerts.MESSAGE_ID}}
+      GROUP_ID: ${{ secerts.GROUP_ID}}
+    runs-on: ubuntu-latest
+    container:
+      image: google/dart:latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 🔧Install dependencies
+        run: pub get
+
+      - name: 🔬Analyze Package
+        run: dart analyze
+
+      - name: 🧪Run Tests
+        run: dart run test
