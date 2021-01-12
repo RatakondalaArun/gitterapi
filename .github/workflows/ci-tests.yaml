@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: ℹ Dart Runtime info
-        run: dart --version && dart --help
+        run: ls -l -h -F && dart --version && dart --help
 
       - name: 🔧Install dependencies
         run: dart pub get || pub get
@@ -33,4 +33,4 @@ jobs:
         run: dart analyze
 
       - name: 🧪Run Tests
-        run: ls && dart run test -h && dart run test . || dart run test ./test/ || dart pub run test
+        run: dart run test || dart run test . || dart run test ./test/ || dart pub run test
