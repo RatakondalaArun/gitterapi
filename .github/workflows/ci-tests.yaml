@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: ℹ Dart Runtime info
-        run: dart run --version && dart --help
+        run: dart --version && dart --help
 
       - name: 🔧Install dependencies
         run: dart pub get || pub get
