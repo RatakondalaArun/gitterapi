@@ -30,4 +30,4 @@ jobs:
         run: dart analyze
 
       - name: 🧪Run Tests
-        run: dart run test
+        run: dart run test test/
