@@ -23,11 +23,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: ℹ Dart Runtime info
+        run: dart run --version && dart --help
+
       - name: 🔧Install dependencies
-        run: pub get
+        run: dart pub get || pub get
 
       - name: 🔬Analyze Package
         run: dart analyze
 
       - name: 🧪Run Tests
-        run: ls && dart run test -h && dart run test . || dart run test ./test/
+        run: ls && dart run test -h && dart run test . || dart run test ./test/ || dart pub run test
