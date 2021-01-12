@@ -9,16 +9,16 @@ on:
 
 jobs:
   build:
-    env:
-      AUTH_TOKEN: ${{ secerts.AUTH_TOKEN}}
-      USER_ID: ${{ secerts.USER_ID}}
-      ROOM_ID: ${{ secerts.ROOM_ID}}
-      CHAT_ROOM_ID: ${{ secerts.CHAT_ROOM_ID}}
-      MESSAGE_ID: ${{ secerts.MESSAGE_ID}}
-      GROUP_ID: ${{ secerts.GROUP_ID}}
     runs-on: ubuntu-latest
     container:
       image: google/dart:latest
+    env:
+      AUTH_TOKEN: ${{ secrets.AUTH_TOKEN}}
+      USER_ID: ${{ secrets.USER_ID}}
+      ROOM_ID: ${{ secrets.ROOM_ID}}
+      CHAT_ROOM_ID: ${{ secrets.CHAT_ROOM_ID}}
+      MESSAGE_ID: ${{ secrets.MESSAGE_ID}}
+      GROUP_ID: ${{ secrets.GROUP_ID}}
 
     steps:
       - uses: actions/checkout@v2
