@@ -1,23 +1,31 @@
 part of gitterapi;
 
+/// Class of version 1 of gitter API
 class V1 extends Version {
-  @override
-  String get version => 'v1';
-
-  // GitterApi _api;
   UserResource _userResource;
   RoomsResource _roomsResource;
   MessagesResource _messagesResource;
   GroupsResource _groupsResource;
   StreamApi _streamApi;
 
+  /// Serves methods to access [user-resources](https://developer.gitter.im/docs/user-resource).
   UserResource get userResource => _userResource;
+
+  /// Serves methods to access [rooms-resources](https://developer.gitter.im/docs/rooms-resource).
   RoomsResource get roomResource => _roomsResource;
+
+  /// Serves methods to access [messages-resources](https://developer.gitter.im/docs/messages-resource).
   MessagesResource get messageResource => _messagesResource;
+
+  /// Serves methods to access [groups-resources](https://developer.gitter.im/docs/groups-resource).
   GroupsResource get groupResource => _groupsResource;
+
+  /// The streaming API allows real-time access to rooms. [streaming-api](https://developer.gitter.im/docs/streaming-api).
   StreamApi get streamApi => _streamApi;
 
-  V1(GitterApi api) : super(api) {
+  /// Creates a instance of [this].
+  ///
+  V1(GitterApi api) : super(api, 'v1') {
     _userResource = UserResource(this);
     _roomsResource = RoomsResource(this);
     _messagesResource = MessagesResource(this);
@@ -25,7 +33,8 @@ class V1 extends Version {
     _streamApi = StreamApi(this);
   }
 
-  Future<T> jsonRequest<T>(
+  /// Sends a json request to server and returns [Result<T>].
+  Future<Result<T>> _jsonRequest<T>(
     String path, {
     String method = 'GET',
     Map<String, dynamic> queryParameters = const <String, dynamic>{},
@@ -34,39 +43,47 @@ class V1 extends Version {
     // initilize BaseOptions
     final options = BaseOptions(
       method: method,
-      baseUrl: 'https://${_api.host}',
+      baseUrl: 'https://${_api._host}',
       responseType: ResponseType.json,
       contentType: 'application/json',
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer ${_api.keys.authToken}',
-        HttpHeaders.acceptHeader: 'application/json'
+        'authorization': 'Bearer ${_api._keys.authToken}',
+        'accept': 'application/json'
       },
     );
 
     // instance of duo with BaseOptions
     final duo = new Dio(options);
 
-    // send request
-    final response = await duo.request<T>(
-      '/$version/$path',
-      queryParameters: _sanatized(queryParameters),
-      data: _sanatized(postData),
-    );
+    Response<T> response;
+    try {
+      // send request
+      response = await duo.request<T>(
+        '/$_version/$path',
+        queryParameters: _sanatized(queryParameters),
+        data: _sanatized(postData),
+      );
 
-    // if statusCode is not 200 throw a error
-    if (response.statusCode != 200) {
-      throw GitterApiException(
-        'statusCode != 200 statusMessage: ${response.statusMessage} statusCode:${response.statusCode}',
-        response: response.data != null
-            ? {'data': response.data, 'statusCode': response.statusCode}
-            : null,
+      // Converts response to Result object.
+      return Result<T>.success(
+        headers: response.headers,
+        data: response.data,
+        statusCode: response.statusCode,
+        statusMessage: response.statusMessage,
+      );
+    } catch (e, st) {
+      // Convert exceptions to Result object
+      return Result<T>.fromError(
+        statusCode: response.statusCode,
+        statusMessage: response.statusMessage,
+        error: e,
+        stackTrace: st,
+        data: response.data,
       );
     }
-
-    // cast the response.data to type T
-    return response.data;
   }
 
+  /// Sends a request and returns [Stream<StreamEvent>].
   Future<Stream<StreamEvent>> _streamRequest(
     String path, {
     String method = 'GET',
@@ -78,8 +95,8 @@ class V1 extends Version {
       responseType: ResponseType.stream,
       contentType: 'application/json',
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer ${_api.keys.authToken}',
-        HttpHeaders.acceptHeader: 'application/json'
+        'authorization': 'Bearer ${_api._keys.authToken}',
+        'accept': 'application/json'
       },
     );
 
@@ -88,12 +105,12 @@ class V1 extends Version {
     Response<ResponseBody> response;
 
     try {
-      response = await duo.request<ResponseBody>('/$version/$path');
-    } on DioError catch (e, st) {
-      print('$e, $st');
-      rethrow;
-    } catch (e, st) {
-      print('$e, $st');
+      response = await duo.request<ResponseBody>('/$_version/$path');
+    } on DioError catch (e) {
+      // catch all DioErrors.
+      throw GitterApiException.fromDio(e);
+    } catch (_) {
+      // rethrow remaining exceptions.
       rethrow;
     }
 

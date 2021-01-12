@@ -1,31 +1,6 @@
 import 'permission.dart';
 
-// {
-//       "id": "576c4d75c2f0db084a1f99ae",
-//       "name": "flutter/flutter",
-//       "topic": "Flutter makes it easy and fast to build beautiful apps for mobile and beyond.\n",
-//       "avatarUrl": "https://avatars-01.gitter.im/group/iv/4/576c4d75c2f0db084a1f99ad",
-//       "uri": "flutter/flutter",
-//       "oneToOne": false,
-//       "userCount": 12301,
-//       "unreadItems": 17,
-//       "mentions": 0,
-//       "lastAccessTime": "2020-12-16T17:14:05.771Z",
-//       "lurk": false,
-//       "url": "/flutter/flutter",
-//       "githubType": "REPO",
-//       "security": "PUBLIC",
-//       "noindex": false,
-//       "tags": [],
-//       "permissions": {
-//           "admin": false
-//       },
-//       "roomMember": true,
-//       "groupId": "576c4d75c2f0db084a1f99ad",
-//       "public": true,
-//       "v": 2
-//   },
-
+/// Represents a room.
 class Room {
   ///Room ID.
   final String id;
@@ -57,6 +32,9 @@ class Room {
   /// Last time the current user accessed the room in ISO format.
   final String lastAccessTime;
 
+  /// This wil be 1 if user marked this as favourite.
+  final int favourite;
+
   /// Indicates if the current user has disabled notifications.
   final bool lurk;
 
@@ -85,6 +63,7 @@ class Room {
   /// Wheather be indexed by search engines.
   final bool noindex;
 
+  /// Permissions user have in this room.
   final Permissions permissions;
 
   /// Room version.
@@ -95,9 +74,12 @@ class Room {
 
   /// Returns [DateTime] instance of `lastAccessTime`.
   DateTime get lastAccessTimeAsDateTime {
-    return DateTime.tryParse(lastAccessTime) ?? DateTime.now();
+    return DateTime.tryParse(
+      lastAccessTime ?? DateTime.now().toUtc().toString(),
+    );
   }
 
+  /// Creates a instance of [Room].
   const Room({
     this.id,
     this.name,
@@ -109,17 +91,18 @@ class Room {
     this.unreadItems,
     this.mentions,
     this.lastAccessTime,
+    this.favourite,
     this.lurk,
     this.url,
     this.githubType,
     this.tags,
-    this.v,
     this.noindex,
     this.security,
     this.roomMember,
     this.groupId,
     this.public,
     this.permissions,
+    this.v,
   });
 
   factory Room.fromMap(Map map) {
@@ -136,17 +119,18 @@ class Room {
       unreadItems: map['unreadItems'],
       mentions: map['mentions'],
       lastAccessTime: map['lastAccessTime'],
+      favourite: map['favourite'],
       lurk: map['lurk'],
       url: map['url'],
       githubType: map['githubType'],
-      tags: List.castFrom<dynamic, String>(map['tags']),
+      tags: List.castFrom<dynamic, String>(map['tags'] ?? []),
       security: map['security'],
       roomMember: map['roomMember'],
       groupId: map['groupId'],
       public: map['public'],
       noindex: map['noindex'],
-      v: map['v'],
       permissions: Permissions.fromMap(map['permissions']),
+      v: map['v'],
     );
   }
 
@@ -162,6 +146,7 @@ class Room {
       'unreadItems': unreadItems,
       'mentions': mentions,
       'lastAccessTime': lastAccessTime,
+      'favourite': favourite,
       'lurk': lurk,
       'url': url,
       'githubType': githubType,
@@ -187,6 +172,7 @@ class Room {
     int unreadItems,
     int mentions,
     String lastAccessTime,
+    int favourite,
     bool lurk,
     String url,
     String githubType,
@@ -210,6 +196,7 @@ class Room {
       unreadItems: unreadItems ?? this.unreadItems,
       mentions: mentions ?? this.mentions,
       lastAccessTime: lastAccessTime ?? this.lastAccessTime,
+      favourite: favourite ?? this.favourite,
       lurk: lurk ?? this.lurk,
       url: url ?? this.url,
       githubType: githubType ?? this.githubType,
@@ -226,19 +213,33 @@ class Room {
 
   @override
   String toString() {
-    return 'Room(id: $id, name: $name, topic: $topic, avatarUrl: $avatarUrl, uri: $uri, oneToOne: $oneToOne, userCount: $userCount, unreadItems: $unreadItems, mentions: $mentions, lastAccessTime: $lastAccessTime, lurk: $lurk, url: $url, githubType: $githubType, security: $security, tags: $tags, roomMember: $roomMember, groupId: $groupId, public: $public, noindex: $noindex, permissions: $permissions, v: $v)';
+    return 'Room(\n${toMap()}\n)';
   }
 }
 
+/// Type of room.
 enum RoomType {
+  /// This room is belonged to organization.
   org,
+
+  /// This room is belonged to Repository.
   repo,
+
+  /// This room is a one to one chat( Direct message ).
   oneToOne,
+
+  /// This is a Organization channel
   orgChannel,
+
+  /// This is a Repository channel
   repoChannel,
+
+  /// This is a User channel
   userChannel,
 }
 
+/// Extension on [RoomType]. Used to parse [RoomType] to [String]
+/// and back.
 extension RoomTypeExtension on RoomType {
   /// Returns [Map<RoomType,String>] with respect to there string.
   static const names = {

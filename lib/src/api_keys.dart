@@ -1,8 +1,11 @@
 part of gitterapi;
 
+///
 class ApiKeys {
+  /// Authorization token required to connect to Gitter API.
   final String authToken;
 
+  /// Creates a instance of [this].
   const ApiKeys(this.authToken);
 
   /// Returns a instance of [ApiKeys]
@@ -10,7 +13,12 @@ class ApiKeys {
   ///
   /// This looksup for `AUTH_TOKEN` env variable.
   ///
-  factory ApiKeys.fromEnv() {
-    return ApiKeys(String.fromEnvironment('AUTH_TOKEN'));
+  /// ### Parameters:
+  ///
+  /// - `tokenVar`: Specifies which env variable to look for token.
+  /// By default it looks for AUTH_TOKEN.
+  ///
+  factory ApiKeys.fromEnv({String tokenVar = 'AUTH_TOKEN'}) {
+    return ApiKeys(String.fromEnvironment(tokenVar));
   }
 }

@@ -14,14 +14,14 @@ void main() {
     final groupResources = api.v1.groupResource;
     test('Should get Get the groups current user is in as List', () async {
       final result = await groupResources.getGropus();
-      expect(true, result is List);
+      expect(result.data is List, true);
     });
 
     test('Should get ', () async {
       final groups = await groupResources.getGropus();
-      final groupId = groups[0]['id'];
+      final groupId = groups.data[0]['id'];
       final result = await groupResources.getRooms(groupId);
-      expect(true, result is List);
+      expect(result.data is List, true);
     });
   });
 }

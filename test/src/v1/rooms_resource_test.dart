@@ -13,12 +13,12 @@ void main() {
 
     test('Should return all the rooms current user is in as List', () async {
       final result = await roomResource.rooms();
-      expect(result is List, true);
+      expect(result.data is List, true);
     });
 
     test('Should return room details from uri as Map', () async {
       final result = await roomResource.getRoomIdFrom('dart-lang/sdk');
-      expect(result is Map, true);
+      expect(result.data is Map, true);
     });
 
     // TODO(@RatakondalaArun): Test joinRoom()
@@ -28,8 +28,8 @@ void main() {
 
     test('Should return users in given room as List', () async {
       final result = await roomResource.getUsers(roomId, limit: 10);
-      expect(result is List, true);
-      expect(result.length == 10, true);
+      expect(result.data is List, true);
+      expect(result.data.length == 10, true);
     });
   });
 }

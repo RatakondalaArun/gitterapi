@@ -1,6 +1,9 @@
 name: gitterapi
-description: Gitter API warpper.
-version: 0.0.1
+version: 0.1.0-b
+description: A Dart client library for accessing Gitter API..
+repository: https://github.com/RatakondalaArun/gitterapi
+issue_tracker: https://github.com/RatakondalaArun/gitterapi/issues
+homepage: https://github.com/RatakondalaArun/gitterapi
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -12,3 +15,5 @@ dependencies:
 dev_dependencies:
   test: ^1.15.7
   dotenv: ^2.0.0
+  dartdoc: ^0.38.0
+  dhttpd: ^3.0.2

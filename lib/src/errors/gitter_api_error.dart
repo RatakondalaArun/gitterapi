@@ -6,15 +6,22 @@ class GitterApiException implements Exception {
   /// Original exception may contains
   final Exception originalException;
 
-  /// Contains `data` and `statusCode` keys
-  final Map<String, dynamic> response;
+  final int statusCode;
+  final String statusMessage;
 
-  /// Helper getter returns true if response is empty or null,
-  bool get isResponseEmpty => response == null || response.isEmpty;
-
-  GitterApiException(
+  const GitterApiException(
     this.message, {
     this.originalException,
-    this.response,
+    this.statusCode,
+    this.statusMessage,
   });
+
+  factory GitterApiException.fromDio(DioError error) {
+    return GitterApiException(
+      error.message,
+      originalException: error,
+      statusCode: error?.response?.statusCode,
+      statusMessage: error?.response?.statusMessage,
+    );
+  }
 }

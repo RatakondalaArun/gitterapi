@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class User {
   /// Gitter User ID.
   final String id;
@@ -25,10 +23,13 @@ class User {
   /// Auth Provider
   final List<String> providers;
 
+  /// Version
   final int v;
 
+  /// Gavavatar version
   final String gv;
 
+  /// Creates a instance of [User]
   const User({
     this.id,
     this.username,
@@ -104,8 +105,4 @@ class User {
       gv: map['gv'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory User.fromJson(String source) => User.fromMap(json.decode(source));
 }

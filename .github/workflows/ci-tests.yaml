@@ -1,0 +1,36 @@
+name: CI-Tests
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    container:
+      image: google/dart:latest
+    env:
+      AUTH_TOKEN: ${{ secrets.AUTH_TOKEN}}
+      USER_ID: ${{ secrets.USER_ID}}
+      ROOM_ID: ${{ secrets.ROOM_ID}}
+      CHAT_ROOM_ID: ${{ secrets.CHAT_ROOM_ID}}
+      MESSAGE_ID: ${{ secrets.MESSAGE_ID}}
+      GROUP_ID: ${{ secrets.GROUP_ID}}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: ℹ Dart Runtime info
+        run: ls -l -h -F && dart --version && dart --help
+
+      - name: 🔧Install dependencies
+        run: dart pub get || pub get
+
+      - name: 🔬Analyze Package
+        run: dart analyze
+
+      - name: 🧪Run Tests
+        run: dart run test || dart run test . || dart run test ./test/ || dart pub run test
