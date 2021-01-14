@@ -57,9 +57,9 @@ class MessagesResource extends Resource<V1> {
   /// - `text`: Required Body of the message.
   /// - `status`: Boolean, set to true to indicate that the message is a status update (what /me uses)
   ///
-  Future<Result<void>> sendMessage(String roomId, String messageText,
+  Future<Result<Map>> sendMessage(String roomId, String messageText,
       {bool status}) {
-    return _v._jsonRequest<void>(
+    return _v._jsonRequest<Map>(
       'rooms/$roomId/$_path',
       method: 'POST',
       postData: {
