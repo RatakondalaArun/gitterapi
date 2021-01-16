@@ -96,8 +96,52 @@ class RoomsResource extends Resource<V1> {
   /// - `userId`: Id of the user.
   /// - `roomId`: Id of the room.
   ///
-  Future<Result<void>> joinRoom(String userId, String roomId) {
-    return _v._jsonRequest(
+  /// ### Examples
+  ///
+  /// ```dart
+  /// {
+  ///   "id": "55a40f2a5e0d51bd787b439c",
+  ///   "name": "Microsoft/vscode",
+  ///   "topic": "",
+  ///   "avatarUrl": "https://avatars-04.gitter.im/group/iv/4/57542d4cc43b8c601977b6ad",
+  ///   "uri": "Microsoft/vscode",
+  ///   "oneToOne": false,
+  ///   "userCount": 3762,
+  ///   "unreadItems": 0,
+  ///   "mentions": 0,
+  ///   "lastAccessTime": "2021-01-16T17:45:34.172Z",
+  ///   "lurk": false,
+  ///   "url": "/Microsoft/vscode",
+  ///   "githubType": "ORG_CHANNEL",
+  ///   "associatedRepo": false,
+  ///   "security": "PUBLIC",
+  ///   "noindex": false,
+  ///   "permissions": {
+  ///      "admin": false
+  ///   },
+  ///   "roomMember": true,
+  ///   "groupId": "57542d4cc43b8c601977b6ad",
+  ///   "group": {
+  ///     "id": "57542d4cc43b8c601977b6ad",
+  ///     "name": "Microsoft",
+  ///     "uri": "Microsoft",
+  ///     "homeUri": "Microsoft/home",
+  ///     "backedBy": {
+  ///         "type": "GH_ORG",
+  ///         "linkPath": "Microsoft"
+  ///     },
+  ///     "avatarUrl": "https://avatars-04.gitter.im/group/iv/4/57542d4cc43b8c601977b6ad"
+  ///   },
+  ///   "backend": {
+  ///     "type": "GH_ORG",
+  ///     "linkPath": "Microsoft"
+  ///   },
+  ///   "public": true,
+  ///   "v": 7
+  /// }
+  /// ```
+  Future<Result<Map>> joinRoom(String userId, String roomId) {
+    return _v._jsonRequest<Map>(
       'user/$userId/$_path',
       method: 'POST',
       postData: {'id': roomId},
